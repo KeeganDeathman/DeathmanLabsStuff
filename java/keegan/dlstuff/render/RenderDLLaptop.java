@@ -21,8 +21,6 @@ public class RenderDLLaptop extends TileEntitySpecialRenderer implements ISimple
 	//This method is called when minecraft renders a tile entity
 
 	public static Minecraft mc = Minecraft.getMinecraft();
-	public static ModelDLLaptop model = new ModelDLLaptop();
-	public static boolean tablet = false;
 	
 	public RenderDLLaptop()
 	{
@@ -55,12 +53,8 @@ public class RenderDLLaptop extends TileEntitySpecialRenderer implements ISimple
 	            rotate = 180;
 	        GL11.glRotatef(rotate, 0F, 1F, 0F);
 	        Block block = entity.getWorldObj().getBlock((int)x, (int)y, (int)z);
-	        if(entity.tablet)
-	        {
-	        	this.tablet = entity.tablet;
-	        }
 	        
-	        this.model.renderModel(0.0625F, tablet);
+	        ModelDLLaptop.renderModel(0.0625F, entity.getTabletItem() != null);
 
 	        GL11.glPopMatrix();
 	}
@@ -70,27 +64,6 @@ public class RenderDLLaptop extends TileEntitySpecialRenderer implements ISimple
 		this.renderComputer((TileEntityDLLaptop) tileEntity, d, d1, d2, f);
 	}
 	
-	@Override
-    public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer)
-    {
-		System.out.println("Rendering Laptop in Inventory");
-		GL11.glPushMatrix();
-    	
-        Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation("dlstuff:textures/models/BlockDLLaptop.png"));
-        
-        GL11.glRotatef(-55f, 0f, 0f, 1f);
-        GL11.glRotatef(90f, 0f, 1f, 0f);
-        GL11.glRotatef(90f, 1f, 0f, 0f);
-        GL11.glRotatef(5f, 0f, 1f, 0f);
-        
-        float scale = 2.0F;
-        
-        GL11.glTranslatef(0.079f, -1f, -0.9f);
-        GL11.glScalef(scale, scale, scale);
-        model.render(null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.03125F);
-        
-        GL11.glPopMatrix();
-    }
 	@Override
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) 
 	{
@@ -106,6 +79,13 @@ public class RenderDLLaptop extends TileEntitySpecialRenderer implements ISimple
 	public boolean shouldRender3DInInventory(int modelId) {
 		// TODO Auto-generated method stub
 		return true;
+	}
+
+	@Override
+	public void renderInventoryBlock(Block arg0, int arg1, int arg2,
+			RenderBlocks arg3) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

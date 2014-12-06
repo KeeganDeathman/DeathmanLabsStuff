@@ -72,16 +72,16 @@ public class BlockDLLaptop extends Block implements ITileEntityProvider
         		if(te.tablet)
         		{
         			player.inventory.addItemStackToInventory(te.tabletItem);
-        			te.tablet = false;
-        			te.tabletItem = null;
+        			te.setTablet(false);
+        			te.setInventorySlotContents(0, null);
         			world.markBlockForUpdate(x, y, z);
         			return true;
         		}
         		if(player.inventory.getCurrentItem() != null && player.inventory.getCurrentItem().isItemEqual(new ItemStack(DLStuff.itemUnProgrammedDPad)))
         		{
         			player.inventory.decrStackSize(player.inventory.currentItem, 1);
-        			te.tabletItem = new ItemStack(DLStuff.itemUnProgrammedDPad);
-            		te.tablet = true;
+        			te.setTabletItem(new ItemStack(DLStuff.itemUnProgrammedDPad));
+            		te.setTablet(true);
             		world.markBlockForUpdate(x, y, z);
             		return true;
         		}

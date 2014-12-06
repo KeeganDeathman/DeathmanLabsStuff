@@ -24,7 +24,8 @@ public class TileEntityDLLaptop extends TileEntity implements IInventory
 	{
 		super.writeToNBT(tag);
 		tag.setBoolean("Tablet", tablet);
-		tabletItem.writeToNBT(tag);
+		if(tabletItem != null)
+			tabletItem.writeToNBT(tag);
 		
 	}
 	
@@ -109,5 +110,21 @@ public class TileEntityDLLaptop extends TileEntity implements IInventory
 	public void setInventorySlotContents(int arg0, ItemStack arg1) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public static boolean isTablet() {
+		return tablet;
+	}
+
+	public static void setTablet(boolean tablet) {
+		TileEntityDLLaptop.tablet = tablet;
+	}
+
+	public ItemStack getTabletItem() {
+		return tabletItem;
+	}
+
+	public void setTabletItem(ItemStack tabletItem) {
+		this.tabletItem = tabletItem;
 	}
 }

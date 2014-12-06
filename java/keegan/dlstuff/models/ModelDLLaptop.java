@@ -7,10 +7,10 @@ import net.minecraft.entity.Entity;
 public class ModelDLLaptop extends ModelBase
 {
   //fields
-    ModelRenderer Keyboard;
-    ModelRenderer Screen;
-    ModelRenderer Cord;
-    ModelRenderer Tablet;
+    static ModelRenderer Keyboard;
+    static ModelRenderer Screen;
+    static ModelRenderer Cord;
+    static ModelRenderer Tablet;
   
   public ModelDLLaptop()
   {
@@ -65,7 +65,7 @@ public class ModelDLLaptop extends ModelBase
     super.setRotationAngles(f, f1, f2, f3, f4, f5, ent);
   }
   
-  public void renderModel(float f, boolean tablet)
+  public static void renderModel(float f, boolean tablet)
   {
 	  if(tablet)
 	  {
