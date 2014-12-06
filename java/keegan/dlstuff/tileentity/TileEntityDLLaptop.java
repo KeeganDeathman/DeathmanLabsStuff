@@ -10,18 +10,30 @@ import net.minecraft.tileentity.TileEntity;
 public class TileEntityDLLaptop extends TileEntity implements IInventory
 {
 	
-	public static boolean tablet = false;
+	public static boolean tablet;
+	
+	public ItemStack tabletItem;
+	
+	public TileEntityDLLaptop()
+	{
+		tablet = false;
+	}
 	
 	@Override
 	public void writeToNBT(NBTTagCompound tag)
 	{
 		super.writeToNBT(tag);
+		tag.setBoolean("Tablet", tablet);
+		tabletItem.writeToNBT(tag);
+		
 	}
 	
 	@Override
 	public void readFromNBT(NBTTagCompound tag)
 	{
 		super.readFromNBT(tag);
+		tablet = tag.getBoolean("Tablet");
+		tabletItem = ItemStack.loadItemStackFromNBT(tag);
 	}
 
 	@Override

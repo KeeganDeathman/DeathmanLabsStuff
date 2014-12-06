@@ -59,7 +59,7 @@ public class BlockDLLaptop extends Block implements ITileEntityProvider
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9)
     {
-    	if(world.isRemote)
+    	if(!world.isRemote)
     	{
     		if(!player.isSneaking() && !Keyboard.isKeyDown(Keyboard.KEY_LCONTROL))
         	{
@@ -71,13 +71,21 @@ public class BlockDLLaptop extends Block implements ITileEntityProvider
         		TileEntityDLLaptop te = (TileEntityDLLaptop)world.getTileEntity(x, y, z);
         		if(te.tablet)
         		{
-        			player.inventory.addItemStackToInventory(new ItemStack(DLStuff.itemDPad));
+        			player.inventory.addItemStackToInventory(te.tabletItem);
         			te.tablet = false;
+        			te.tabletItem = null;
+        			world.markBlockForUpdate(x, y, z);
         			return true;
         		}
-        		player.inventory.decrStackSize(player.inventory.currentItem, 1);
-        		te.tablet = true;
-        		return true;
+        		if(player.inventory.getCurrentItem() != null && player.inventory.getCurrentItem().isItemEqual(new ItemStack(DLStuff.itemUnProgrammedDPad)))
+        		{
+        			player.inventory.decrStackSize(player.inventory.currentItem, 1);
+        			te.tabletItem = new ItemStack(DLStuff.itemUnProgrammedDPad);
+            		te.tablet = true;
+            		world.markBlockForUpdate(x, y, z);
+            		return true;
+        		}
+        		return false;
         	}
     	}
     	return false;

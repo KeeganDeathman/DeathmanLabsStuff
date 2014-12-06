@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 
 import org.lwjgl.opengl.GL11;
 
