@@ -21,6 +21,7 @@ public class RenderDLLaptop extends TileEntitySpecialRenderer implements ISimple
 	//This method is called when minecraft renders a tile entity
 
 	public static Minecraft mc = Minecraft.getMinecraft();
+	public ModelDLLaptop model = new ModelDLLaptop();
 	
 	public RenderDLLaptop()
 	{
@@ -53,9 +54,14 @@ public class RenderDLLaptop extends TileEntitySpecialRenderer implements ISimple
 	            rotate = 180;
 	        GL11.glRotatef(rotate, 0F, 1F, 0F);
 	        Block block = entity.getWorldObj().getBlock((int)x, (int)y, (int)z);
-	        
-	        ModelDLLaptop.renderModel(0.0625F, entity.getTabletItem() != null);
-
+	        if(entity.getTabletItem() != null)
+	        {
+	        	model.renderModel(0.0625F, true);
+	        }
+	        else
+	        {
+	        	model.renderModel(0.0625F, false);
+	        }
 	        GL11.glPopMatrix();
 	}
 	
