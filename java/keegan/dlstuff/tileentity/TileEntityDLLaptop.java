@@ -10,20 +10,20 @@ import net.minecraft.tileentity.TileEntity;
 public class TileEntityDLLaptop extends TileEntity implements IInventory
 {
 	
-	public static boolean tablet;
+	public boolean noTablet;
 	
 	public ItemStack tabletItem;
 	
 	public TileEntityDLLaptop()
 	{
-		tablet = false;
+		noTablet = true;
 	}
 	
 	@Override
 	public void writeToNBT(NBTTagCompound tag)
 	{
 		super.writeToNBT(tag);
-		tag.setBoolean("Tablet", tablet);
+		tag.setBoolean("Tablet", noTablet);
 		if(tabletItem != null)
 			tabletItem.writeToNBT(tag);
 		
@@ -33,7 +33,7 @@ public class TileEntityDLLaptop extends TileEntity implements IInventory
 	public void readFromNBT(NBTTagCompound tag)
 	{
 		super.readFromNBT(tag);
-		tablet = tag.getBoolean("Tablet");
+		noTablet = tag.getBoolean("Tablet");
 		tabletItem = ItemStack.loadItemStackFromNBT(tag);
 	}
 
@@ -112,12 +112,12 @@ public class TileEntityDLLaptop extends TileEntity implements IInventory
 		
 	}
 
-	public static boolean isTablet() {
-		return tablet;
+	public boolean isTablet() {
+		return this.noTablet;
 	}
 
-	public static void setTablet(boolean tablet) {
-		TileEntityDLLaptop.tablet = tablet;
+	public void setTablet(boolean tabletToBe) {
+		this.noTablet = tabletToBe;
 	}
 
 	public ItemStack getTabletItem() {

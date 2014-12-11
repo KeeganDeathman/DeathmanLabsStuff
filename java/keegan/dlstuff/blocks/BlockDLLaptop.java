@@ -69,10 +69,10 @@ public class BlockDLLaptop extends Block implements ITileEntityProvider
         	else if(!player.isSneaking() && Keyboard.isKeyDown(Keyboard.KEY_LCONTROL))
         	{
         		TileEntityDLLaptop te = (TileEntityDLLaptop)world.getTileEntity(x, y, z);
-        		if(te.tablet)
+        		if(!te.noTablet)
         		{
         			player.inventory.addItemStackToInventory(te.tabletItem);
-        			te.setTablet(false);
+        			te.noTablet = true;
         			te.setTabletItem(null);
         			world.markBlockForUpdate(x, y, z);
         			return true;
@@ -81,7 +81,7 @@ public class BlockDLLaptop extends Block implements ITileEntityProvider
         		{
         			player.inventory.decrStackSize(player.inventory.currentItem, 1);
         			te.setTabletItem(new ItemStack(DLStuff.itemUnProgrammedDPad));
-            		te.setTablet(true);
+            		te.noTablet = false;
             		world.markBlockForUpdate(x, y, z);
             		return true;
         		}

@@ -53,13 +53,14 @@ public class RenderDLLaptop extends TileEntitySpecialRenderer implements ISimple
 	        if (i == 3)
 	            rotate = 180;
 	        GL11.glRotatef(rotate, 0F, 1F, 0F);
-	        Block block = entity.getWorldObj().getBlock((int)x, (int)y, (int)z);
-	        if(entity.getTabletItem() != null)
+	        if(entity.noTablet)
 	        {
 	        	model.renderModel(0.0625F, true);
+	        	//System.out.println("Rendering tablet because " + entity.tablet);
 	        }
 	        else
 	        {
+	        	//System.out.println("Rendering no tablet because " + entity.tablet);
 	        	model.renderModel(0.0625F, false);
 	        }
 	        GL11.glPopMatrix();
