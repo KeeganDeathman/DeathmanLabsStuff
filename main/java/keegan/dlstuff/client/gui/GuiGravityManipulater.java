@@ -26,6 +26,8 @@ public class GuiGravityManipulater extends GuiContainer
 		super(new ContainerGravity(inv, tile));
 		this.tile = tile;
 		gravityModifier = "";
+		this.xSize = 256;
+		this.ySize = 256;
 	}
 
 	@Override
@@ -57,7 +59,7 @@ public class GuiGravityManipulater extends GuiContainer
 		if (par2 == 28)
 		{
 			this.gravityModifier = this.gravityModifierInput.getText();
-			DLStuff.packetPipeline.sendToServer(new PacketGravity(tile.xCoord, tile.yCoord, tile.zCoord, Integer.parseInt(gravityModifier)));
+			DLStuff.packetPipeline.sendToServer(new PacketGravity(tile.xCoord, tile.yCoord, tile.zCoord, Float.parseFloat(gravityModifier)));
 			this.gravityModifierInput.setText(gravityModifier = "");
 		}
 

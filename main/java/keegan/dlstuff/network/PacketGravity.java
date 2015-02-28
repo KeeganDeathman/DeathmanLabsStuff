@@ -11,11 +11,12 @@ import net.minecraft.world.World;
 public class PacketGravity extends AbstractPacket
 {
 
-	private int x,y,z,gravity;
+	private int x,y,z;
+	private float gravity;
 	
 	public PacketGravity(){}
 	
-	public PacketGravity(int x, int y, int z, int gravity)
+	public PacketGravity(int x, int y, int z, float gravity)
 	{
 		this.x = x;
 		this.y = y ;
@@ -29,7 +30,7 @@ public class PacketGravity extends AbstractPacket
 		buffer.writeInt(x);
 		buffer.writeInt(y);
 		buffer.writeInt(z);
-		buffer.writeInt(gravity);
+		buffer.writeFloat(gravity);
 	}
 
 	@Override
@@ -38,7 +39,7 @@ public class PacketGravity extends AbstractPacket
 		this.x = buffer.readInt();
 		this.y = buffer.readInt();
 		this.z = buffer.readInt();
-		this.gravity = buffer.readInt();
+		this.gravity = buffer.readFloat();
 
 	}
 

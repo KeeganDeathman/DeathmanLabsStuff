@@ -21,7 +21,7 @@ import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-@Mod(version="1.0",modid="dlstuff",name="Deathman Labs Stuff", dependencies="required-after:labstuff")
+@Mod(version="1.0",modid="dlstuff",name="Deathman Labs Stuff", dependencies="required-after:labstuff@[2.5,)")
 public class DLStuff 
 {
 	
@@ -45,6 +45,7 @@ public class DLStuff
 	public static Block blockAcelleratorCollisonTube;
 	public static Block blockAcceleratorInterface;
 	public static Block blockAcceleratorControlPanel;
+	public static Block blockACPGag;
 	
 	//ABRID
 	public static Block blockABRID;
@@ -100,10 +101,16 @@ public class DLStuff
 		blockDLLaptop = new BlockDLLaptop(Material.iron).setBlockName("blockDLLaptop").setCreativeTab(tabDeathman);
 		GameRegistry.registerBlock(blockDLLaptop, "blockDLLaptop");
 		blockInterface = new BlockInterface(Material.iron).setBlockName("blockInterface").setCreativeTab(tabDeathman);
-		GameRegistry.registerBlock(blockInterface, "blockInterface");
+		//GameRegistry.registerBlock(blockInterface, "blockInterface");
 		blockGag = new BlockGag(Material.iron).setBlockName("blockGag").setBlockTextureName("dlstuff:blockGag");
 		GameRegistry.registerBlock(blockGag, "gag");
-		blockAcceleratorControlPanel = new BlockAcceleratorControlPanel();
+		blockAcceleratorControlPanel = new BlockAcceleratorControlPanel().setBlockName("blockAcceleratorControlPanel").setCreativeTab(tabDeathman);
+		GameRegistry.registerBlock(blockAcceleratorControlPanel, "blockAcceleratorControlPanel");
+		blockACPGag = new BlockACPGag(Material.iron).setBlockName("blockACPGag").setBlockTextureName("dlstuff:blockGag");
+		GameRegistry.registerBlock(blockACPGag, "blockACPGag");
+		blockAcceleratorInterface = new BlockAcceleratorInterface().setBlockName("blockAcceleratorInterface").setCreativeTab(tabDeathman).setBlockTextureName("dlstuff:acceleratorInterface");
+		GameRegistry.registerBlock(blockAcceleratorInterface, "blockAcceleratorInterface");
+		blockAcceleratorTube = new BlockAcceleratorTube().setBlockName("blockAcceleratorTube").setCreativeTab(tabDeathman);
 		blockGravityManipulater = new BlockGravityManipulater(Material.iron).setCreativeTab(tabDeathman).setBlockName("blockGravityManipulater").setBlockTextureName("dlstuff:blockGravity");
 		GameRegistry.registerBlock(blockGravityManipulater, "blockGravityManipulater");
 	}
@@ -124,6 +131,8 @@ public class DLStuff
 		//Tile Entities
 		GameRegistry.registerTileEntity(TileEntityDLLaptop.class, "TileEntityDLLaptop");
 		GameRegistry.registerTileEntity(TileEntityGravityManipulater.class, "tileEntityGravity");		
+		GameRegistry.registerTileEntity(TileEntityAcceleratorControlPanel.class, "TileEntityAcceleratorControlPanel");
+		GameRegistry.registerTileEntity(TileEntityAcceleratorInterface.class, "TileEntityAcceleratorInterface");
 		//Packets
 		packetPipeline.registerPacket(PacketDLLaptopUSB.class);
 		packetPipeline.registerPacket(PacketDLLaptopWeb.class);

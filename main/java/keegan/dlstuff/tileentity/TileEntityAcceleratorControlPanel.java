@@ -1,8 +1,8 @@
 package keegan.dlstuff.tileentity;
 
-import net.minecraft.tileentity.TileEntity;
+import keegan.labstuff.tileentity.DataConnectedDevice;
 
-public class TileEntityAcceleratorControlPanel extends TileEntity 
+public class TileEntityAcceleratorControlPanel extends DataConnectedDevice
 {
 	
 }

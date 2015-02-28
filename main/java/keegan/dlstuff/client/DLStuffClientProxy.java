@@ -2,11 +2,8 @@ package keegan.dlstuff.client;
 
 import keegan.dlstuff.DLStuff;
 import keegan.dlstuff.common.DLStuffCommonProxy;
-import keegan.dlstuff.render.ItemRenderDLLaptop;
-import keegan.dlstuff.render.RenderDLLaptop;
-import keegan.dlstuff.render.RenderInterface;
-import keegan.dlstuff.tileentity.TileEntityDLLaptop;
-import keegan.dlstuff.tileentity.TileEntityInterface;
+import keegan.dlstuff.render.*;
+import keegan.dlstuff.tileentity.*;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.MinecraftForgeClient;
 import cpw.mods.fml.client.registry.ClientRegistry;
@@ -18,7 +15,9 @@ public class DLStuffClientProxy extends DLStuffCommonProxy
 	{
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDLLaptop.class, new RenderDLLaptop());
 		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(DLStuff.blockDLLaptop), new ItemRenderDLLaptop());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityInterface.class, new RenderInterface());
+		//ClientRegistry.bindTileEntitySpecialRenderer(TileEntityInterface.class, new RenderInterface());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAcceleratorControlPanel.class, new RenderAcceleratorControlPanel());
+		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(DLStuff.blockAcceleratorControlPanel), new ItemRenderAcceleratorControlPanel());
 	}
 	
 	@Override
