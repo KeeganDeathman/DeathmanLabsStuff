@@ -42,8 +42,14 @@ public class DLStuff
 	
 	//Particle accelerator
 	public static Block blockAcceleratorTube;
-	public static Block blockAcelleratorCollisonTube;
+	public static Block blockAcceleratorDetectorCore;
+	public static Block blockAcceleratorTrackingDetector;
+	public static Block blockAcceleratorSolenoid;
+	public static Block blockAcceleratorElectromagneticCalorimeter;
+	public static Block blockAcceleratorHadronCalorimeter;
+	public static Block blockAcceleratorMuonDetector;
 	public static Block blockAcceleratorInterface;
+	public static Block blockAcceleratorPowerInput;
 	public static Block blockAcceleratorControlPanel;
 	public static Block blockACPGag;
 	
@@ -111,6 +117,22 @@ public class DLStuff
 		blockAcceleratorInterface = new BlockAcceleratorInterface().setBlockName("blockAcceleratorInterface").setCreativeTab(tabDeathman).setBlockTextureName("dlstuff:acceleratorInterface");
 		GameRegistry.registerBlock(blockAcceleratorInterface, "blockAcceleratorInterface");
 		blockAcceleratorTube = new BlockAcceleratorTube().setBlockName("blockAcceleratorTube").setCreativeTab(tabDeathman);
+		GameRegistry.registerBlock(blockAcceleratorTube, "blockAcceleratorTube");
+		blockAcceleratorDetectorCore = new BlockAcceleratorDetectorCore(Material.iron).setBlockName("blockAccleratorDetectorCore").setBlockTextureName("dlstuff:detectorCore").setCreativeTab(tabDeathman);
+		blockAcceleratorTrackingDetector = new BlockAcceleratorDetector().setBlockName("blockAcceleratorTrackingDetector").setBlockTextureName("dlstuff:trackingDetector").setCreativeTab(tabDeathman);
+		blockAcceleratorSolenoid = new BlockAcceleratorDetector().setBlockName("blockAcceleratorSolenoid").setBlockTextureName("dlstuff:solenoid").setCreativeTab(tabDeathman);
+		blockAcceleratorElectromagneticCalorimeter = new BlockAcceleratorDetector().setBlockName("blockAcceleratorElectromagneticCalorimeter").setBlockTextureName("dlstuff:electroCalorimeter").setCreativeTab(tabDeathman);
+		blockAcceleratorHadronCalorimeter = new BlockAcceleratorDetector().setBlockName("blockAcceleratorHadronCalorimeter").setBlockTextureName("dlstuff:hadron").setCreativeTab(tabDeathman);
+		blockAcceleratorMuonDetector = new BlockAcceleratorDetector().setBlockName("blockAcceleratorMuonDetector").setBlockTextureName("dlstuff:muon").setCreativeTab(tabDeathman);
+		blockAcceleratorPowerInput = new BlockAcceleratorPowerInput().setBlockName("blockAcceleratorPowerInput").setBlockTextureName("dlstuff:blockAccelPower").setCreativeTab(tabDeathman);
+		GameRegistry.registerBlock(blockAcceleratorDetectorCore, "blockAccleratorDetectorCore");
+		GameRegistry.registerBlock(blockAcceleratorTrackingDetector, "blockAcceleratorTrackingDetector");
+		GameRegistry.registerBlock(blockAcceleratorSolenoid, "blockAcceleratorSolenoid");
+		GameRegistry.registerBlock(blockAcceleratorElectromagneticCalorimeter, "blockAcceleratorElectromagneticCalorimeter");
+		GameRegistry.registerBlock(blockAcceleratorHadronCalorimeter, "blockAcceleratorHadronCalorimeter");
+		GameRegistry.registerBlock(blockAcceleratorMuonDetector, "blockAcceleratorMuonDetector");
+		GameRegistry.registerBlock(blockAcceleratorPowerInput, "blockAcceleratorPowerInput");
+
 		blockGravityManipulater = new BlockGravityManipulater(Material.iron).setCreativeTab(tabDeathman).setBlockName("blockGravityManipulater").setBlockTextureName("dlstuff:blockGravity");
 		GameRegistry.registerBlock(blockGravityManipulater, "blockGravityManipulater");
 	}
@@ -133,6 +155,9 @@ public class DLStuff
 		GameRegistry.registerTileEntity(TileEntityGravityManipulater.class, "tileEntityGravity");		
 		GameRegistry.registerTileEntity(TileEntityAcceleratorControlPanel.class, "TileEntityAcceleratorControlPanel");
 		GameRegistry.registerTileEntity(TileEntityAcceleratorInterface.class, "TileEntityAcceleratorInterface");
+		GameRegistry.registerTileEntity(TileEntityAcceleratorTube.class, "TileEntityAcceleratorTube");
+		GameRegistry.registerTileEntity(TileEntityAcceleratorDetectorCore.class, "TileEntityAcceleratorDetectorCore");
+		GameRegistry.registerTileEntity(TileEntityAcceleratorPowerInput.class, "TileEntityPowerInput");
 		//Packets
 		packetPipeline.registerPacket(PacketDLLaptopUSB.class);
 		packetPipeline.registerPacket(PacketDLLaptopWeb.class);

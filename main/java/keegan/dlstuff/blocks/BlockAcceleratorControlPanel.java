@@ -46,17 +46,17 @@ public class BlockAcceleratorControlPanel extends Block implements ITileEntityPr
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack)
     {
     	super.onBlockPlacedBy(world, x, y, z, player, stack);
-    	world.setBlock(x-3, y, z, ((BlockACPGag) (DLStuff.blockACPGag)).setCore(x,y,z));
-    	world.setBlock(x-2, y, z, ((BlockACPGag) (DLStuff.blockACPGag)).setCore(x,y,z));
-    	world.setBlock(x-1, y, z, ((BlockACPGag) (DLStuff.blockACPGag)).setCore(x,y,z));
-    	world.setBlock(x-3, y+1, z, ((BlockACPGag) (DLStuff.blockACPGag)).setCore(x,y,z));
-    	world.setBlock(x-2, y+1, z, ((BlockACPGag) (DLStuff.blockACPGag)).setCore(x,y,z));
-    	world.setBlock(x-1, y+1, z, ((BlockACPGag) (DLStuff.blockACPGag)).setCore(x,y,z));
-    	world.setBlock(x, y, z+2, ((BlockACPGag) (DLStuff.blockACPGag)).setCore(x,y,z));
-    	world.setBlock(x, y, z+1, ((BlockACPGag) (DLStuff.blockACPGag)).setCore(x,y,z));
-    	world.setBlock(x, y+1, z+2, ((BlockACPGag) (DLStuff.blockACPGag)).setCore(x,y,z));
-    	world.setBlock(x, y+1, z+1, ((BlockACPGag) (DLStuff.blockACPGag)).setCore(x,y,z));
-    	world.setBlock(x, y+1, z, ((BlockACPGag) (DLStuff.blockACPGag)).setCore(x,y,z));
+    	world.setBlock(x-3, y, z, DLStuff.blockACPGag);
+    	world.setBlock(x-2, y, z, DLStuff.blockACPGag);
+    	world.setBlock(x-1, y, z, DLStuff.blockACPGag);
+    	world.setBlock(x-3, y+1, z, DLStuff.blockACPGag);
+    	world.setBlock(x-2, y+1, z, DLStuff.blockACPGag);
+    	world.setBlock(x-1, y+1, z, DLStuff.blockACPGag);
+    	world.setBlock(x, y, z+2, DLStuff.blockACPGag);
+    	world.setBlock(x, y, z+1, DLStuff.blockACPGag);
+    	world.setBlock(x, y+1, z+2, DLStuff.blockACPGag);
+    	world.setBlock(x, y+1, z+1, DLStuff.blockACPGag);
+    	world.setBlock(x, y+1, z, DLStuff.blockACPGag);
     }
 	
 	@Override

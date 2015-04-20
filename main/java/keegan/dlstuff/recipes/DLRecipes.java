@@ -16,7 +16,8 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class DLRecipes extends Recipes
 {
-	private static ArrayList<WebAction> webActions = new ArrayList<WebAction>();
+	public static ArrayList<WebAction> webActions = new ArrayList<WebAction>();
+	public static ArrayList<AcceleratorDiscovery> accelDiscoveries = new ArrayList<AcceleratorDiscovery>();
 	
 	public static void registerShaplessCrafting()
 	{
@@ -45,6 +46,12 @@ public class DLRecipes extends Recipes
 	public static void addAction(WebAction action)
 	{
 		webActions.add(action);
+	}
+	
+	public static void addAccelDiscovery(AcceleratorDiscovery dependency, ItemStack flash)
+	{
+		AcceleratorDiscovery discovery = new AcceleratorDiscovery(dependency, flash, accelDiscoveries.size() + 1);
+		accelDiscoveries.add(discovery);
 	}
 	
 }

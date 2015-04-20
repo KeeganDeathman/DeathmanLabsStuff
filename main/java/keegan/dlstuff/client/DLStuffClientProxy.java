@@ -18,6 +18,9 @@ public class DLStuffClientProxy extends DLStuffCommonProxy
 		//ClientRegistry.bindTileEntitySpecialRenderer(TileEntityInterface.class, new RenderInterface());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAcceleratorControlPanel.class, new RenderAcceleratorControlPanel());
 		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(DLStuff.blockAcceleratorControlPanel), new ItemRenderAcceleratorControlPanel());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAcceleratorTube.class, new RenderAcceleratorTube());
+		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(DLStuff.blockAcceleratorTube), new ItemRenderAcceleratorPipe());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAcceleratorDetectorCore.class, new RenderAcceleratorDetector());
 	}
 	
 	@Override

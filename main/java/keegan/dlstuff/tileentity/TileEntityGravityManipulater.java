@@ -1,7 +1,8 @@
 package keegan.dlstuff.tileentity;
 
 import keegan.dlstuff.DLStuff;
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -22,6 +23,7 @@ public class TileEntityGravityManipulater extends TileEntity implements IInvento
 	{
 		gravityModifier = 0;
 		warpTime = 0;
+		tickCount = 0;
 	}
 	
 	@Override
@@ -68,29 +70,52 @@ public class TileEntityGravityManipulater extends TileEntity implements IInvento
 	public void updateEntity()
 	{
 		tickCount += 1;
+		System.out.println("Tick: " + tickCount);
 		if(getStackInSlot(0) != null && getStackInSlot(0).isItemEqual(new ItemStack(DLStuff.itemWarpDriveBattery)) && warpTime == 0)
 		{
 			decrStackSize(0, 1);
 			warpTime = 36000;
+			System.out.println("Intaking battery");
 		}
-		if(warpTime > 0 && tickCount == 20)
+		if(tickCount >= 10)
 		{
-			for(int i = 0; i < worldObj.playerEntities.size(); i++)
+			tickCount = 0;
+			if(warpTime > 0)
 			{
-				EntityPlayer player = (EntityPlayer) worldObj.playerEntities.get(i);
-				if(gravityModifier != 0 && !player.capabilities.isFlying && Math.abs(player.posX - xCoord) <= 25 && Math.abs(player.posY - yCoord) <= 26 && Math.abs(player.posZ - zCoord) <= 25)
-				{	
-					player.addVelocity(0, gravityModifier, 0);
-					((EntityPlayerMP) player).playerNetServerHandler.sendPacket(new S12PacketEntityVelocity(player));
-					System.out.println(gravityModifier);
+				System.out.println("Remaining warp: " + warpTime);
+				for(int i = 0; i < worldObj.loadedEntityList.size(); i++)
+				{
+					Entity entity = (Entity) worldObj.loadedEntityList.get(i);
+					float distX = (float) Math.abs(entity.posX - xCoord);
+					float distY = (float) Math.abs(entity.posY - yCoord);
+					float distZ = (float) Math.abs(entity.posZ - zCoord);
+					float distHor = (float) Math.sqrt((distX * distX) + (distZ * distZ));
+					int dist = (int) Math.sqrt((distHor * distHor) + (distY * distY));
+					if(gravityModifier != 0 && dist <= 25)
+					{	
+						if(entity instanceof EntityPlayer)
+						{
+							EntityPlayer player = (EntityPlayer) entity;
+							if(!player.capabilities.isFlying)
+							{
+								player.addVelocity(0, gravityModifier, 0);
+								((EntityPlayerMP) player).playerNetServerHandler.sendPacket(new S12PacketEntityVelocity(player));
+								System.out.println(gravityModifier);
+							}
+						}
+						else if(!(entity instanceof EntityPainting || entity instanceof EntityItemFrame))
+						{
+							entity.addVelocity(0, gravityModifier, 0);
+							System.out.println(gravityModifier);
+						}
+					}
+				}
+				warpTime -= 10;
+				if(warpTime == 0)
+				{
+				worldObj.spawnEntityInWorld(new EntityItem(worldObj, xCoord, yCoord+1, zCoord, new ItemStack(DLStuff.itemEmptyWarpDriveBattery)));
 				}
 			}
-			warpTime -= 1;
-			if(warpTime == 0)
-			{
-				worldObj.spawnEntityInWorld(new EntityItem(worldObj, xCoord, yCoord+1, zCoord, new ItemStack(DLStuff.itemEmptyWarpDriveBattery)));
-			}
-			tickCount = 0;
 		}
 	}
 

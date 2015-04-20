@@ -1,15 +1,18 @@
 package keegan.dlstuff.tileentity;
 
 import keegan.dlstuff.DLStuff;
+import keegan.dlstuff.recipes.DLRecipes;
+import keegan.labstuff.tileentity.DataConnectedDevice;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 
-public class TileEntityAcceleratorInterface extends TileEntity implements IInventory
+public class TileEntityAcceleratorInterface extends DataConnectedDevice implements IInventory
 {
 
 	private ItemStack[] chestContents = new ItemStack[3];
+	private TileEntityAcceleratorControlPanel control;
 	
 	@Override
 	public int getSizeInventory()
@@ -22,6 +25,72 @@ public class TileEntityAcceleratorInterface extends TileEntity implements IInven
 	public ItemStack getStackInSlot(int slot)
 	{
 		return chestContents[slot];
+	}
+	
+	@Override
+	public void updateEntity()
+	{
+		super.updateEntity();
+		if(this.getId() == null)
+			registerWithNetwork();
+		if(getNetwork() != null)
+		{
+			while(control == null)
+			{
+				for(int i = 0; i < getNetwork().getDeviceCount(); i++)
+				{
+					if(getNetwork().getDeviceByIndex(i) instanceof TileEntityAcceleratorControlPanel)
+					{
+						System.out.println("Control detected");
+						control = (TileEntityAcceleratorControlPanel) getNetwork().getDeviceByIndex(i);
+					}
+				}
+			}
+		}
+		else
+			System.out.println("no network");
+		if(control != null)
+		{
+			if(getStackInSlot(0) != null)
+			{
+				DataPackage hasMatter = new DataPackage(control, "particlesLoaded");
+				getNetwork().sendMessage(hasMatter);
+			}
+			else
+			{
+				DataPackage hasMatter = new DataPackage(control, "particlesNotLoaded");
+				getNetwork().sendMessage(hasMatter);
+			}
+			TileEntity core = worldObj.getTileEntity(xCoord - 6, yCoord, zCoord);
+			if(core instanceof TileEntityAcceleratorDetectorCore)
+			{
+				if(((TileEntityAcceleratorDetectorCore) core).isGoodForLaunch())
+				{
+					DataPackage isPowered = new DataPackage(control, "powered");
+					getNetwork().sendMessage(isPowered);
+				}
+				else
+				{
+					DataPackage isPowered = new DataPackage(control, "notPowered");
+					getNetwork().sendMessage(isPowered);
+				}
+			}
+		}
+	}
+	
+	@Override
+	public void performAction(String command)
+	{
+		if(command.startsWith("newDiscovery_"))
+		{
+			command.replace("newDiscovery_", "");
+			int discovery = Integer.parseInt(command);
+			setInventorySlotContents(1, DLRecipes.accelDiscoveries.get(discovery).getDiscoveryFlashDrive());
+		}
+		if(command.startsWith("launch"))
+		{
+			decrStackSize(0, 1);
+		}
 	}
 	
 	@Override

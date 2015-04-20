@@ -82,7 +82,7 @@ public class ItemRenderAcceleratorControlPanel implements IItemRenderer {
         }
         
         
-        float scale = 1F;
+        float scale = 100F;
         
         GL11.glTranslatef(0.079f, -1f, -0.9f);
         GL11.glScalef(scale, scale, scale);
@@ -90,7 +90,7 @@ public class ItemRenderAcceleratorControlPanel implements IItemRenderer {
         {
         	if(type == type.INVENTORY)
         	{
-        		GL11.glTranslatef(0f, 3f, 0f);
+        		GL11.glTranslatef(.005f, 0.005f, 0f);
         		//GL11.glScalef(13, 13, 13);
         		GL11.glRotatef(180, 1f, 0f, 0f);
         		GL11.glRotatef(-45f, 0f, 1f, 0f);
@@ -102,6 +102,10 @@ public class ItemRenderAcceleratorControlPanel implements IItemRenderer {
         }
         else if(!inventory)
         {
+        	GL11.glScalef(.5f, .5f, .5f);
+        	if(type == type.EQUIPPED_FIRST_PERSON)
+        		GL11.glScalef(0.05f, 0.05f, 0.05f);
+        	GL11.glRotatef(180, 0f, 1f, 0f);
     		Minecraft.getMinecraft().renderEngine.bindTexture(Tex);
         	computerModel.renderAll();
         }

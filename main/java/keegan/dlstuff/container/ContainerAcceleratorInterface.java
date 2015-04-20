@@ -17,7 +17,8 @@ public class ContainerAcceleratorInterface extends Container
 		
 		this.bindPlayerInventory(inv);
 		
-		this.addSlotToContainer(new Slot(tile, 0, 202, 202));
+		//this.addSlotToContainer(new Slot(tile, 1, 211, 116));
+		this.addSlotToContainer(new Slot(tile, 0, 114, 172));
 		
 	}
 	

@@ -17,12 +17,52 @@ public class BlockACPGag extends Block
 		coreCoords = new int[3];
 	}
 
-	public Block setCore(int x, int y, int z)
+	public void setCore(int x, int y, int z, World world)
 	{
+		if(world.getBlock(x, y-1, z).equals(DLStuff.blockAcceleratorControlPanel))
+			y -= 1;
+		else if(world.getBlock(x, y, z-1).equals(DLStuff.blockAcceleratorControlPanel))
+			z -= 1;
+		else if(world.getBlock(x+1, y, z).equals(DLStuff.blockAcceleratorControlPanel))
+			x += 1;
+		else if(world.getBlock(x, y-1, z-1).equals(DLStuff.blockAcceleratorControlPanel))
+		{
+			y -= 1;
+			z -= 1;
+		}
+		else if(world.getBlock(x+1, y-1, z).equals(DLStuff.blockAcceleratorControlPanel))
+		{
+			y -= 1;
+			x += 1;
+		}
+		else if(world.getBlock(x, y, z-2).equals(DLStuff.blockAcceleratorControlPanel))
+			z -= 2;
+		else if(world.getBlock(x, y-1, z-2).equals(DLStuff.blockAcceleratorControlPanel))
+		{
+			y -= 1;
+			z -= 2;
+		}
+		else if(world.getBlock(x+1, y, z).equals(DLStuff.blockACPGag))
+		{
+			if(world.getBlock(x, y-1, z).equals(DLStuff.blockACPGag))
+			{
+				y -= 1;
+				if(world.getBlock(x+2, y, z).equals(DLStuff.blockAcceleratorControlPanel))
+					x += 2;
+				else if(world.getBlock(x+3, y, z).equals(DLStuff.blockAcceleratorControlPanel))
+					x += 3;
+			}
+			else
+			{
+				if(world.getBlock(x+2, y, z).equals(DLStuff.blockAcceleratorControlPanel))
+					x += 2;
+				else if(world.getBlock(x+3, y, z).equals(DLStuff.blockAcceleratorControlPanel))
+					x += 3;
+			}
+		}
 		coreCoords[0] = x;
 		coreCoords[1] = y;
 		coreCoords[2] = z;
-		return this;
 	}
 
 	@Override
@@ -30,6 +70,7 @@ public class BlockACPGag extends Block
 	{
 		if (!world.isRemote)
 		{
+			setCore(x, y, z, world);
 			// System.out.println("Server");
 			if (!player.isSneaking())
 			{
