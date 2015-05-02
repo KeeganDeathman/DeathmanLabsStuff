@@ -12,12 +12,14 @@ public class TileEntityAcceleratorControlPanel extends DataConnectedDevice
 	private boolean isPowered;
 	private boolean isRunning;
 	private ArrayList<AcceleratorDiscovery> discovered = new ArrayList<AcceleratorDiscovery>();
+	private int tickCount;
 	
 	public TileEntityAcceleratorControlPanel()
 	{
 		hasMatter = false;
 		isPowered = false;
 		isRunning = false;
+		tickCount = 0;
 	}
 	
 	@Override
@@ -66,53 +68,57 @@ public class TileEntityAcceleratorControlPanel extends DataConnectedDevice
 	public void updateEntity()
 	{
 		super.updateEntity();
-		if(getNetwork() != null)
+		if(tickCount>=100)
 		{
-			isRunning = hasMatter && isPowered;
-			for(int i = 0; i < getNetwork().getDeviceCount(); i++)
+			tickCount = 0;
+			if(getNetwork() != null)
 			{
-				if(getNetwork().getDeviceByIndex(i) instanceof TileEntityAcceleratorInterface)
+				isRunning = hasMatter && isPowered;
+				for(int i = 0; i < getNetwork().getDeviceCount(); i++)
 				{
-					if(isRunning)
+					if(getNetwork().getDeviceByIndex(i) instanceof TileEntityAcceleratorInterface)
 					{
-						Random r = new Random();
-						int Low = 0;
-						int High = 100;
-						int R = r.nextInt(High-Low) + Low;
-						if(R == 74)
+						if(isRunning)
 						{
-							int discovery = 0;
-							boolean good = false;
-							while(!good)
+							Random r = new Random();
+							int Low = 0;
+							int High = 100;
+							int R = r.nextInt(High-Low) + Low;
+							if(R == 74)
 							{
-								for(int j = 0; j < discovered.size(); j++)
+								int discovery = 0;
+								boolean good = false;
+								while(!good)
 								{
-									if(DLRecipes.accelDiscoveries.get(discovery).equals(discovered.get(j)))
-										discovery++;
-									else
+									for(int j = 0; j < discovered.size(); j++)
 									{
-										AcceleratorDiscovery discov = DLRecipes.accelDiscoveries.get(discovery);
-										for(int k = 0; k < discovered.size(); k++)
+										if(DLRecipes.accelDiscoveries.get(discovery).equals(discovered.get(j)))
+											discovery++;
+										else if(j == discovered.size())
 										{
-											if(discov.getDependency() != null)
-											{	
-												if(discov.getDependency().equals(discovered.get(k)) )
-												{
-													good = true;
+											AcceleratorDiscovery discov = DLRecipes.accelDiscoveries.get(discovery);
+											for(int k = 0; k < discovered.size(); k++)
+											{
+												if(discov.getDependency() != null)
+												{	
+													if(discov.getDependency().equals(discovered.get(k)) )
+													{
+														good = true;
+													}
+													else
+													{
+														discovery++;
+													}
 												}
 												else
 												{
-													discovery++;
+													good = true;
 												}
-											}
-											else
-											{
-												good = true;
 											}
 										}
 									}
+									getNetwork().sendMessage(new DataPackage(getNetwork().getDeviceByIndex(i), "discovery_" + discovery));
 								}
-								getNetwork().sendMessage(new DataPackage(getNetwork().getDeviceByIndex(i), "discovery_" + discovery));
 							}
 						}
 					}

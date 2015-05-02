@@ -87,8 +87,14 @@ public class TileEntityAcceleratorTube extends TileEntity
 	
 	public boolean isAcceleratorComplete()
 	{
-		if(corners == 4 && straights == 27 && hasDetector && hasWestToNorth && hasNorthToEast && hasEastToSouth && hasSouthToWest && hasDetector)
+		if(corners == 4 && straights == 30 && hasDetector && hasWestToNorth && hasNorthToEast && hasEastToSouth && hasSouthToWest && hasDetector)
 			return true;
+		else
+		{
+//			System.out.println("Corners " + corners);
+//			System.out.println("Straights " + straights);
+//			System.out.println("Detector " + hasDetector);
+		}
 		return false;
 	}
 	
@@ -103,45 +109,57 @@ public class TileEntityAcceleratorTube extends TileEntity
 		String oldType = type;
 		if(!up && !down)
 		{
-			if(east)
-			{
-				if(west)
-					type = "straight";
-				else if(north)
-					type = "ne";
-				else if(south)
-					type = "es";
-			}
-			else if(west)
-			{
-				if(north)
-					type = "wn";
-				else if(south)
-					type = "sw";
-			}
-			else if(north)
-			{
-				if(south)
-					type = "straight";
-			}
+			if(west && east)
+				type = "straight";
+			if(north && south)
+				type = "straight";
+			if(north && east)
+				type = "ne";
+			if(east && south)
+				type = "es";
+			if(south && west)
+				type = "sw";
+			if(west && north)
+				type = "wn";
 		}
 		if(!(type.equals(oldType)))
 		{
 			TileEntityAcceleratorTube nextTube = getNextTube(this);
-			if(oldType.equals("invalid"))
+			if(nextTube != null)
 			{
-				if(type.equals("straight"))
+				if(oldType.equals("invalid"))
 				{
-					nextTube.changeStraight(this);
+					//System.out.println("We're in. " + type);
+					if(type.equals("straight"))
+					{
+						this.straights+=1;
+						nextTube.addStraight(this);
+					}
+					if(type.equals("wn"))
+					{
+						this.corners+=1;
+						nextTube.addCorner(this, true, false, false, false);
+					}
+					if(type.equals("ne"))
+					{
+						this.corners+=1;
+						nextTube.addCorner(this, false, true, false, false);
+					}
+					if(type.equals("es"))
+					{
+						this.corners+=1;
+						nextTube.addCorner(this, false, false, true, false);
+					}
+					if(type.equals("sw"))
+					{
+						this.corners+=1;
+						nextTube.addCorner(this, false, false, false, true);
+					}
 				}
-				if(type.equals("wn"))
-					nextTube.addCorner(this, true, false, false, false);
-				if(type.equals("ne"))
-					nextTube.addCorner(this, false, true, false, false);
-				if(type.equals("es"))
-					nextTube.addCorner(this, false, false, true, false);
-				if(type.equals("sw"))
-					nextTube.addCorner(this, false, false, false, true);
+			}
+			else
+			{
+				System.out.println("Where there's the problem!");
 			}
 		}
 	}
@@ -163,14 +181,25 @@ public class TileEntityAcceleratorTube extends TileEntity
 		return null;
 	}
 	
-	public void changeStraight(TileEntityAcceleratorTube src)
+	public void addStraight(TileEntityAcceleratorTube src)
 	{
 		TileEntityAcceleratorTube nextTube = getNextTube(src);
-		straights = src.straights;
-		if(nextTube != null)
+		int theStraights = src.straights;
+		if(nextTube != null && theStraights == straights + 1)
 		{
-			if(nextTube.straights != straights)
-				nextTube.changeStraight(this);
+			straights+=1;
+			nextTube.addStraight(this);
+		}
+	}
+	
+	public void subStraight(TileEntityAcceleratorTube src)
+	{
+		TileEntityAcceleratorTube nextTube = getNextTube(src);
+		int theStraights = src.straights;
+		if(nextTube != null && theStraights == straights - 1)
+		{
+			straights-=1;
+			nextTube.addStraight(this);
 		}
 	}
 	

@@ -6,6 +6,7 @@ import keegan.labstuff.tileentity.DataConnectedDevice;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityAcceleratorInterface extends DataConnectedDevice implements IInventory
@@ -13,6 +14,13 @@ public class TileEntityAcceleratorInterface extends DataConnectedDevice implemen
 
 	private ItemStack[] chestContents = new ItemStack[3];
 	private TileEntityAcceleratorControlPanel control;
+	private int tickCount;
+	
+	public TileEntityAcceleratorInterface()
+	{
+		tickCount = 0;
+		control = null;
+	}
 	
 	@Override
 	public int getSizeInventory()
@@ -31,50 +39,69 @@ public class TileEntityAcceleratorInterface extends DataConnectedDevice implemen
 	public void updateEntity()
 	{
 		super.updateEntity();
-		if(this.getId() == null)
-			registerWithNetwork();
-		if(getNetwork() != null)
+		tickCount++;
+		if(tickCount>=200)
 		{
-			while(control == null)
+			tickCount = 0;
+			if(!worldObj.isRemote)
 			{
-				for(int i = 0; i < getNetwork().getDeviceCount(); i++)
+				if(this.getId() == null)
+					registerWithNetwork();
+				if(getNetwork() != null)
 				{
-					if(getNetwork().getDeviceByIndex(i) instanceof TileEntityAcceleratorControlPanel)
+					while(control == null)
 					{
-						System.out.println("Control detected");
-						control = (TileEntityAcceleratorControlPanel) getNetwork().getDeviceByIndex(i);
+						if(getNetwork().getDeviceCount() == 0)
+							break;
+						for(int i = 0; i < getNetwork().getDeviceCount(); i++)
+						{
+							detectControl(getNetwork().getDeviceByIndex(i).getId());
+						}
+					}
+				}
+				else
+					System.out.println("no network");
+				if(control != null)
+				{
+					if(getStackInSlot(0) != null)
+					{
+						DataPackage hasMatter = new DataPackage(control, "particlesLoaded");
+						getNetwork().sendMessage(hasMatter);
+					}
+					else
+					{
+						DataPackage hasMatter = new DataPackage(control, "particlesNotLoaded");
+						getNetwork().sendMessage(hasMatter);
+					}
+					TileEntity core = worldObj.getTileEntity(xCoord - 6, yCoord, zCoord);
+					if(core instanceof TileEntityAcceleratorDetectorCore)
+					{
+						if(((TileEntityAcceleratorDetectorCore) core).isGoodForLaunch())
+						{
+							DataPackage isPowered = new DataPackage(control, "powered");
+							getNetwork().sendMessage(isPowered);
+						}
+						else
+						{
+							DataPackage isPowered = new DataPackage(control, "notPowered");
+							getNetwork().sendMessage(isPowered);
+						}
+					}
+					else
+					{
+						System.out.println("Wheres the core?");
 					}
 				}
 			}
 		}
-		else
-			System.out.println("no network");
-		if(control != null)
+	}
+	
+	private void detectControl(String i)
+	{
+		if(getNetwork().getDeviceById(i) instanceof TileEntityAcceleratorControlPanel)
 		{
-			if(getStackInSlot(0) != null)
-			{
-				DataPackage hasMatter = new DataPackage(control, "particlesLoaded");
-				getNetwork().sendMessage(hasMatter);
-			}
-			else
-			{
-				DataPackage hasMatter = new DataPackage(control, "particlesNotLoaded");
-				getNetwork().sendMessage(hasMatter);
-			}
-			TileEntity core = worldObj.getTileEntity(xCoord - 6, yCoord, zCoord);
-			if(core instanceof TileEntityAcceleratorDetectorCore)
-			{
-				if(((TileEntityAcceleratorDetectorCore) core).isGoodForLaunch())
-				{
-					DataPackage isPowered = new DataPackage(control, "powered");
-					getNetwork().sendMessage(isPowered);
-				}
-				else
-				{
-					DataPackage isPowered = new DataPackage(control, "notPowered");
-					getNetwork().sendMessage(isPowered);
-				}
-			}
+			System.out.println("Control detected");
+			control = (TileEntityAcceleratorControlPanel) getNetwork().getDeviceById(i);
 		}
 	}
 	
@@ -190,6 +217,27 @@ public class TileEntityAcceleratorInterface extends DataConnectedDevice implemen
 	public void openInventory() {
 		// TODO Auto-generated method stub
 
+	}
+	
+	@Override
+	public void writeToNBT(NBTTagCompound tag)
+	{
+		if(getNetwork()!=null)
+		{
+			int netX = getNetwork().xCoord;
+			int netY = getNetwork().yCoord;
+			int netZ = getNetwork().zCoord;
+			int[] networkLoc = {netX,netY,netZ};
+
+			tag.setIntArray("network", networkLoc);
+		}
+	}
+	
+	@Override
+	public void readFromNBT(NBTTagCompound tag)
+	{
+		int[] net = tag.getIntArray("network");
+		this.register(net[0], net[1], net[2]);
 	}
 }
 
