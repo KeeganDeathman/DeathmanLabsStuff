@@ -1,8 +1,10 @@
 package keegan.dlstuff.tileentity;
 
 import keegan.dlstuff.render.RenderAcceleratorTube;
+import keegan.labstuff.tileentity.TileEntityPower;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
 public class TileEntityAcceleratorTube extends TileEntity
 {
@@ -98,68 +100,65 @@ public class TileEntityAcceleratorTube extends TileEntity
 		return false;
 	}
 	
-	public void updateSides(boolean up, boolean down, boolean east, boolean west, boolean north, boolean south)
+	public boolean configSide(int x, int y, int z)
+	 {
+		 if(worldObj.getTileEntity(x, y, z) instanceof TileEntityAcceleratorTube || worldObj.getTileEntity(x, y, z) instanceof TileEntityAcceleratorDetectorCore)
+			 return true;
+		 return false;
+	 }
+	
+	@Override
+	public void updateEntity()
 	{
-		this.up = up;
-		this.down = down;
-		this.east = east;
-		this.west = west;
-		this.north = north;
-		this.south = south;
-		String oldType = type;
-		if(!up && !down)
+		if(!worldObj.isRemote)
 		{
-			if(west && east)
-				type = "straight";
-			if(north && south)
-				type = "straight";
-			if(north && east)
-				type = "ne";
-			if(east && south)
-				type = "es";
-			if(south && west)
-				type = "sw";
-			if(west && north)
-				type = "wn";
-		}
-		if(!(type.equals(oldType)))
-		{
-			TileEntityAcceleratorTube nextTube = getNextTube(this);
-			if(nextTube != null)
+			this.up = this.configSide(xCoord, yCoord + 1, zCoord);
+			this.down = this.configSide(xCoord, yCoord - 1, zCoord);
+			this.east = this.configSide(xCoord + 1, yCoord, zCoord);
+			this.west = this.configSide(xCoord - 1, yCoord, zCoord);
+			this.south = this.configSide(xCoord, yCoord, zCoord + 1);
+			this.north = this.configSide(xCoord, yCoord, zCoord - 1);
+			String oldType = this.type;
+			//System.out.println(up + " " + down + " " + east + " " + west + " " + north + " " + south);
+			if(!up && !down)
 			{
-				if(oldType.equals("invalid"))
+				if(west && east)
+					type = "straight";
+				if(north && south)
+					type = "straight";
+				if(north && west)
+					type = "ne";
+				if(west && south)
+					type = "es";
+				if(south && east)
+					type = "sw";
+				if(east && north)
+					type = "wn";
+			}
+			if(!(type.equals(oldType)))
+			{
+				TileEntityAcceleratorTube nextTube = getNextTube(this);
+				if(nextTube != null)
 				{
-					//System.out.println("We're in. " + type);
-					if(type.equals("straight"))
+					if(oldType.equals("invalid"))
 					{
-						this.straights+=1;
-						nextTube.addStraight(this);
-					}
-					if(type.equals("wn"))
-					{
-						this.corners+=1;
-						nextTube.addCorner(this, true, false, false, false);
-					}
-					if(type.equals("ne"))
-					{
-						this.corners+=1;
-						nextTube.addCorner(this, false, true, false, false);
-					}
-					if(type.equals("es"))
-					{
-						this.corners+=1;
-						nextTube.addCorner(this, false, false, true, false);
-					}
-					if(type.equals("sw"))
-					{
-						this.corners+=1;
-						nextTube.addCorner(this, false, false, false, true);
+						//System.out.println("We're in. " + type);
+						if(type.equals("straight"))
+						{
+							straights += 1;
+							nextTube.addStraight(this);
+						}
+						if(type.equals("wn") || type.equals("ne") || type.equals("es") || type.equals("sw"))
+						{
+							corners += 1;
+							nextTube.addCorner(this, type);
+						}
 					}
 				}
-			}
-			else
-			{
-				System.out.println("Where there's the problem!");
+				else
+				{
+					System.out.println("Where there's the problem!");
+				}
 			}
 		}
 	}
@@ -170,76 +169,134 @@ public class TileEntityAcceleratorTube extends TileEntity
 		TileEntity posZ = worldObj.getTileEntity(xCoord, yCoord, zCoord+1);
 		TileEntity negX = worldObj.getTileEntity(xCoord-1, yCoord, zCoord);
 		TileEntity negZ = worldObj.getTileEntity(xCoord, yCoord, zCoord-1);
-		if(posX instanceof TileEntityAcceleratorTube && posX != null && !posX.equals(src))
-			return (TileEntityAcceleratorTube)posX;
-		if(posZ instanceof TileEntityAcceleratorTube && posZ != null && !posZ.equals(src))
-			return (TileEntityAcceleratorTube)posZ;
-		if(negX instanceof TileEntityAcceleratorTube && negX != null && !negX.equals(src))
-			return (TileEntityAcceleratorTube)negX;
-		if(negZ instanceof TileEntityAcceleratorTube && negZ != null && !negZ.equals(src))
-			return (TileEntityAcceleratorTube)negZ;
+		if(type.equals("wn") || type.equals("ne") || type.equals("es") || type.equals("sw"))
+		{
+			if(posX instanceof TileEntityAcceleratorTube && posX != null && !posX.equals(src) && type.equals("wn"))
+				return (TileEntityAcceleratorTube)posX;
+			if(posZ instanceof TileEntityAcceleratorTube && posZ != null && !posZ.equals(src) && type.equals("sw"))
+				return (TileEntityAcceleratorTube)posZ;
+			if(negX instanceof TileEntityAcceleratorTube && negX != null && !negX.equals(src) && type.equals("es"))
+				return (TileEntityAcceleratorTube)negX;
+			if(negZ instanceof TileEntityAcceleratorTube && negZ != null && !negZ.equals(src) && type.equals("ne"))
+				return (TileEntityAcceleratorTube)negZ;
+		}
+		else
+		{
+			if(posX instanceof TileEntityAcceleratorTube && posX != null && !posX.equals(src))
+				return (TileEntityAcceleratorTube)posX;
+			if(posZ instanceof TileEntityAcceleratorTube && posZ != null && !posZ.equals(src))
+				return (TileEntityAcceleratorTube)posZ;
+			if(posZ instanceof TileEntityAcceleratorDetectorCore && posZ != null && worldObj.getTileEntity(xCoord, yCoord, zCoord+2) instanceof TileEntityAcceleratorTube && worldObj.getTileEntity(xCoord, yCoord, zCoord+2) != null && !worldObj.getTileEntity(xCoord, yCoord, zCoord+2).equals(src))
+				return (TileEntityAcceleratorTube)worldObj.getTileEntity(xCoord, yCoord, zCoord+2);
+			if(negX instanceof TileEntityAcceleratorTube && negX != null && !negX.equals(src))
+				return (TileEntityAcceleratorTube)negX;
+			if(negZ instanceof TileEntityAcceleratorTube && negZ != null && !negZ.equals(src))
+				return (TileEntityAcceleratorTube)negZ;
+			if(negZ instanceof TileEntityAcceleratorDetectorCore && negZ != null && worldObj.getTileEntity(xCoord, yCoord, zCoord-2) instanceof TileEntityAcceleratorTube && worldObj.getTileEntity(xCoord, yCoord, zCoord-2) != null && !worldObj.getTileEntity(xCoord, yCoord, zCoord-2).equals(src))
+				return (TileEntityAcceleratorTube)worldObj.getTileEntity(xCoord, yCoord, zCoord-2);
+		}
 		return null;
 	}
 	
-	public void addStraight(TileEntityAcceleratorTube src)
+	
+	public void addStraight(TileEntityAcceleratorTube issuer)
 	{
-		TileEntityAcceleratorTube nextTube = getNextTube(src);
-		int theStraights = src.straights;
-		if(nextTube != null && theStraights == straights + 1)
+		System.out.println("Straights!");
+		if(straights + 1 == issuer.straights)
 		{
 			straights+=1;
-			nextTube.addStraight(this);
+			if(getNextTube(issuer) != null)
+				getNextTube(issuer).addStraight(this);
+		}
+		else
+		{
+			int diff = issuer.straights - straights;
+			if(diff > 0)
+			{
+				straights+=diff;
+				if(getNextTube(issuer) != null)
+					getNextTube(issuer).addStraight(this);
+			}
 		}
 	}
 	
-	public void subStraight(TileEntityAcceleratorTube src)
+	public void subStraight(TileEntityAcceleratorTube issuer)
 	{
-		TileEntityAcceleratorTube nextTube = getNextTube(src);
-		int theStraights = src.straights;
-		if(nextTube != null && theStraights == straights - 1)
+		if(straights - 1 == issuer.straights)
 		{
 			straights-=1;
-			nextTube.addStraight(this);
+			if(getNextTube(issuer) != null)
+				getNextTube(issuer).subStraight(this);
+		}
+		else
+		{
+			int diff = straights - issuer.straights;
+			if(diff > 0)
+			{
+				straights-=diff;
+				if(getNextTube(issuer) != null)
+					getNextTube(issuer).subStraight(this);
+			}
 		}
 	}
 	
-	public void addCorner(TileEntityAcceleratorTube src, boolean wn, boolean ne, boolean es, boolean sw)
+	public void addCorner(TileEntityAcceleratorTube src, String newType)
 	{
 		TileEntityAcceleratorTube nextTube = getNextTube(src);
-			corners += 1;
-			
-		if(wn)
+		
+		if(newType.equals("wn"))
 			hasWestToNorth = true;
-		else if(ne)
+		else if(newType.equals("ne"))
 			hasNorthToEast = true;
-		else if(es)
+		else if(newType.equals("es"))
 			hasEastToSouth = true;
-		else if(sw)
+		else if(newType.equals("sw"))
 			hasSouthToWest = true;
-		if(nextTube != null)
+		if(corners + 1 == src.corners)
 		{
-			if(nextTube.corners != corners)
-				nextTube.addCorner(this, wn, ne, es, sw);
+			corners+=1;
+			if(nextTube != null)
+				nextTube.addCorner(this, newType);
+		}
+		else
+		{
+			int diff = src.corners - corners;
+			if(diff > 0)
+			{
+				corners+=diff;
+				if(nextTube != null)
+					nextTube.addCorner(this, newType);
+			}
 		}
 	}
 	
-	public void subCorner(TileEntityAcceleratorTube src, boolean wn, boolean ne, boolean es, boolean sw)
+	public void subCorner(TileEntityAcceleratorTube src, String newType)
 	{
 		TileEntityAcceleratorTube nextTube = getNextTube(src);
-		corners -= 1;
-			
-		if(wn)
+		
+		if(newType.equals("wn"))
 			hasWestToNorth = false;
-		else if(ne)
+		else if(newType.equals("ne"))
 			hasNorthToEast = false;
-		else if(es)
+		else if(newType.equals("es"))
 			hasEastToSouth = false;
-		else if(sw)
+		else if(newType.equals("sw"))
 			hasSouthToWest = false;
-		if(nextTube != null)
+		if(corners - 1 == src.corners)
 		{
-			if(nextTube.corners != corners)
-				nextTube.subCorner(this, wn, ne, es, sw);
+			corners-=1;
+			if(nextTube != null)
+				nextTube.subCorner(this, newType);
+		}
+		else
+		{
+			int diff = corners - src.corners;
+			if(diff > 0)
+			{
+				corners-=diff;
+				if(nextTube != null)
+					nextTube.subCorner(this, newType);
+			}
 		}
 	}
 	

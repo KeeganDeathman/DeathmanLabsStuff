@@ -1,19 +1,14 @@
 package keegan.dlstuff.render;
 
-import keegan.dlstuff.tileentity.TileEntityAcceleratorTube;
-import keegan.labstuff.blocks.BlockGasChamberPort;
+import keegan.dlstuff.tileentity.*;
 import keegan.labstuff.models.ModelPlasmaPipe;
-import keegan.labstuff.tileentity.TileEntityPlasma;
-import keegan.labstuff.tileentity.TileEntityPlasmaPipe;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
+import net.minecraft.world.*;
 
 import org.lwjgl.opengl.GL11;
 
@@ -68,7 +63,6 @@ public class RenderAcceleratorTube extends TileEntitySpecialRenderer implements 
 	        GL11.glRotatef(rotate, 0F, 1F, 0F);
 	        
 	        this.configureSides(entity);
-	        this.tellEntity(entity);
 	        
 	        this.model.renderCable(0.0625F, north, east, south, west, up, down);
 
@@ -77,10 +71,6 @@ public class RenderAcceleratorTube extends TileEntitySpecialRenderer implements 
 	        GL11.glPopMatrix();
 	}
 	
-	public void tellEntity(TileEntityAcceleratorTube entity)
-	{
-		entity.updateSides(up, down, east, west, north, south);
-	}
 	
 	 public void configureSides(TileEntityAcceleratorTube tile)
 	 {
@@ -97,7 +87,7 @@ public class RenderAcceleratorTube extends TileEntitySpecialRenderer implements 
 	 
 	 public boolean configSide(World world, int x, int y, int z)
 	 {
-		 if(world.getTileEntity(x, y, z) instanceof TileEntityAcceleratorTube)
+		 if(world.getTileEntity(x, y, z) instanceof TileEntityAcceleratorTube || world.getTileEntity(x, y, z) instanceof TileEntityAcceleratorDetectorCore)
 			 return true;
 		 return false;
 	 }

@@ -477,7 +477,9 @@ public class TileEntityAcceleratorDetectorCore extends TileEntity
 	
 	public boolean isGoodForLaunch()
 	{
-		return ((TileEntityAcceleratorTube) worldObj.getTileEntity(xCoord, yCoord, zCoord + 1)).isAcceleratorComplete() && isPowered;
+		if(worldObj.getTileEntity(xCoord, yCoord, zCoord + 1) != null)
+			return ((TileEntityAcceleratorTube) worldObj.getTileEntity(xCoord, yCoord, zCoord + 1)).isAcceleratorComplete() && isPowered;
+		return false;
 	}
 
 	public void setPowered(boolean isPowered)

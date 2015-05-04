@@ -2,7 +2,7 @@ package keegan.dlstuff.tileentity;
 
 import keegan.dlstuff.DLStuff;
 import keegan.dlstuff.recipes.DLRecipes;
-import keegan.labstuff.tileentity.DataConnectedDevice;
+import keegan.labstuff.tileentity.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;

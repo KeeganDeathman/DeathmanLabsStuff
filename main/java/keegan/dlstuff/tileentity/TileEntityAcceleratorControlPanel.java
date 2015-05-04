@@ -3,7 +3,7 @@ package keegan.dlstuff.tileentity;
 import java.util.*;
 
 import keegan.dlstuff.recipes.*;
-import keegan.labstuff.tileentity.DataConnectedDevice;
+import keegan.labstuff.tileentity.*;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class TileEntityAcceleratorControlPanel extends DataConnectedDevice
