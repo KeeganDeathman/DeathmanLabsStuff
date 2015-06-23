@@ -32,11 +32,6 @@ public class RenderAcceleratorTube extends TileEntitySpecialRenderer implements 
 	{
 		 int i = entity.blockMetadata;
 
-		 	//Tell the entity
-		 	if(entity.getRenderer() == null)
-		 		entity.setRenderer(this);
-		 	if(!(entity.getRenderer().equals(this)))
-		 			entity.setRenderer(this);
 		 
 			// Binds the texture
 		 	GL11.glEnable(GL11.GL_BLEND);

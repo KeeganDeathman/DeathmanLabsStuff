@@ -6,6 +6,7 @@ import keegan.dlstuff.blocks.*;
 import keegan.dlstuff.client.gui.GuiHandler;
 import keegan.dlstuff.common.*;
 import keegan.dlstuff.items.*;
+import keegan.dlstuff.multipart.RegisterMulti;
 import keegan.dlstuff.network.*;
 import keegan.dlstuff.recipes.*;
 import keegan.dlstuff.tileentity.*;
@@ -14,14 +15,14 @@ import keegan.labstuff.PacketHandling.PacketPipeline;
 import keegan.labstuff.common.TabLabStuff;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.item.Item;
+import net.minecraft.item.*;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-@Mod(version="1.0",modid="dlstuff",name="Deathman Labs Stuff", dependencies="required-after:labstuff@[2.5,)")
+@Mod(version="1.0",modid="dlstuff",name="Deathman Labs Stuff", dependencies="required-after:labstuff@[2.5,);after:ForgeMultipart")
 public class DLStuff 
 {
 	
@@ -62,6 +63,14 @@ public class DLStuff
 	public static Block blockPalladiumOre;
 	public static Block blockElectromagneticFieldProjector;
 	
+	//DiscoverySupercomputer
+	public static Block blockDSCCore;
+	public static Block blockDSCRam;
+	public static Block blockDSCWorkbench;
+	public static Block blockDSCDrive;
+	public static Block blockDSCOS;
+	public static Block blockDSCRibbonCable;
+	
 	//WarpDrive
 	public static Block blockGravityManipulater;
 	
@@ -72,6 +81,13 @@ public class DLStuff
 	public static Item itemTouchScreen;
 	public static Item itemUnProgrammedDPad;
 	public static Item itemDPad;
+	
+	//Discoveries
+	public static Item itemDiscoveryDrive;
+	public static Item itemDiscoveryAntiMatter;
+	public static Item itemDiscoveryNegativeEnergy;
+	public static Item itemDiscoveryWarp;
+	public static Item itemDiscoveryTemporal;
 	
 	//ABRID
 	public static Item itemBottleOfABRIDChemical;
@@ -102,6 +118,11 @@ public class DLStuff
 		itemEmptyWarpDriveBattery = new ItemEmptyWarpDriveBattery().setCreativeTab(tabDeathman).setUnlocalizedName("itemEmptyWarpDriveBattery").setTextureName("dlstuff:warpBatteryEmpty");
 		GameRegistry.registerItem(itemWarpDriveBattery, "itemWarpDriveBattery");
 		GameRegistry.registerItem(itemEmptyWarpDriveBattery, "itemEmptyWarpDriveBattery");
+		itemDiscoveryDrive = new ItemDiscoveryDrive().setCreativeTab(tabDeathman).setUnlocalizedName("itemDiscovery");
+		GameRegistry.registerItem(itemDiscoveryDrive, "itemDiscovery");
+		itemDiscoveryAntiMatter = new ItemDiscoveryDrive().setCreativeTab(tabDeathman).setUnlocalizedName("itemDiscoveryAntiMatter");
+		GameRegistry.registerItem(itemDiscoveryAntiMatter, "itemDiscoveryAntiMatter");
+		
 		
 		//Blocks
 		blockDLLaptop = new BlockDLLaptop(Material.iron).setBlockName("blockDLLaptop").setCreativeTab(tabDeathman);
@@ -132,9 +153,16 @@ public class DLStuff
 		GameRegistry.registerBlock(blockAcceleratorHadronCalorimeter, "blockAcceleratorHadronCalorimeter");
 		GameRegistry.registerBlock(blockAcceleratorMuonDetector, "blockAcceleratorMuonDetector");
 		GameRegistry.registerBlock(blockAcceleratorPowerInput, "blockAcceleratorPowerInput");
+		blockDSCRibbonCable = new BlockDSCRibbonCable(Material.iron).setBlockName("blockDSCRibbonCable").setBlockTextureName("dlstuff:blockDSCRibbonCable").setCreativeTab(tabDeathman);
+		GameRegistry.registerBlock(blockDSCRibbonCable, "blockDSCRibbonCable");
 
 		blockGravityManipulater = new BlockGravityManipulater(Material.iron).setCreativeTab(tabDeathman).setBlockName("blockGravityManipulater").setBlockTextureName("dlstuff:blockGravity");
 		GameRegistry.registerBlock(blockGravityManipulater, "blockGravityManipulater");
+		
+		if(Loader.isModLoaded("ForgeMultipart"))
+		{
+			new RegisterMulti();
+		}
 	}
 	
 	@EventHandler
@@ -149,6 +177,7 @@ public class DLStuff
 		DLRecipes.registerShaplessCrafting();
 		
 		DLRecipes.addAction(new WebDownload());
+		DLRecipes.addAccelDiscovery(null, new ItemStack(itemDiscoveryAntiMatter));
 		
 		//Tile Entities
 		GameRegistry.registerTileEntity(TileEntityDLLaptop.class, "TileEntityDLLaptop");
@@ -162,6 +191,7 @@ public class DLStuff
 		packetPipeline.registerPacket(PacketDLLaptopUSB.class);
 		packetPipeline.registerPacket(PacketDLLaptopWeb.class);
 		packetPipeline.registerPacket(PacketGravity.class);
+		packetPipeline.registerPacket(PacketACP.class);
 	}
 	
 }

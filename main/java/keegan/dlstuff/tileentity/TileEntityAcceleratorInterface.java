@@ -1,6 +1,7 @@
 package keegan.dlstuff.tileentity;
 
 import keegan.dlstuff.DLStuff;
+import keegan.dlstuff.items.ItemDiscoveryDrive;
 import keegan.dlstuff.recipes.DLRecipes;
 import keegan.labstuff.tileentity.*;
 import net.minecraft.entity.player.EntityPlayer;
@@ -40,7 +41,7 @@ public class TileEntityAcceleratorInterface extends DataConnectedDevice implemen
 	{
 		super.updateEntity();
 		tickCount++;
-		if(tickCount>=200)
+		if(tickCount>=400)
 		{
 			tickCount = 0;
 			if(!worldObj.isRemote)
@@ -108,14 +109,19 @@ public class TileEntityAcceleratorInterface extends DataConnectedDevice implemen
 	@Override
 	public void performAction(String command)
 	{
-		if(command.startsWith("newDiscovery_"))
+		if(command.startsWith("discovery_"))
 		{
-			command.replace("newDiscovery_", "");
-			int discovery = Integer.parseInt(command);
-			setInventorySlotContents(1, DLRecipes.accelDiscoveries.get(discovery).getDiscoveryFlashDrive());
+			System.out.println("Cheese~~~~!");
+			int discovery = Integer.parseInt(command.substring(command.indexOf("_")+1));
+			//if(getStackInSlot(1).isItemEqual(new ItemStack(DLStuff.itemDiscoveryDrive)))
+			//{
+			System.out.println("Cheese~~~~~!");
+				setInventorySlotContents(1, DLRecipes.accelDiscoveries.get(discovery).getDiscoveryFlashDrive());
+			//}
 		}
 		if(command.startsWith("launch"))
 		{
+			System.out.println("Accelerator active");
 			decrStackSize(0, 1);
 		}
 	}
@@ -185,6 +191,8 @@ public class TileEntityAcceleratorInterface extends DataConnectedDevice implemen
 		if(slot == 0)
 			return true;
 		if(slot == 2 && (itemstack.isItemEqual(new ItemStack(DLStuff.itemWarpDriveBattery)) || itemstack.isItemEqual(new ItemStack(DLStuff.itemEmptyWarpDriveBattery))))
+			return true;
+		if(slot == 1 && itemstack.getItem() instanceof ItemDiscoveryDrive)
 			return true;
 		return false;
 	}

@@ -42,4 +42,22 @@ public class AcceleratorDiscovery
 		this.index = index;
 	}
 	
+	@Override
+	public boolean equals(Object object)
+	{
+	    boolean isEqual= false;
+
+	    if (object != null && object instanceof AcceleratorDiscovery)
+	    {
+	        isEqual = (getIndex() == ((AcceleratorDiscovery) object).getIndex());
+	    }
+
+	    return isEqual;
+	}
+
+	@Override
+	public int hashCode() {
+	    return this.index;
+	}
+	
 }

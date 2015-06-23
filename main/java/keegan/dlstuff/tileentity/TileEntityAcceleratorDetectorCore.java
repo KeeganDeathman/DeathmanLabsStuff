@@ -428,7 +428,7 @@ public class TileEntityAcceleratorDetectorCore extends TileEntity
 											&& multiblocks[0][5][2].equals(DLStuff.blockAcceleratorMuonDetector) && multiblocks[10][5][2].equals(DLStuff.blockAcceleratorMuonDetector) && multiblocks[0][6][2].equals(DLStuff.blockAcceleratorMuonDetector) && multiblocks[10][6][2].equals(DLStuff.blockAcceleratorMuonDetector) && multiblocks[0][7][2].equals(DLStuff.blockAcceleratorMuonDetector) && multiblocks[10][7][2].equals(DLStuff.blockAcceleratorMuonDetector) && multiblocks[3][10][2].equals(DLStuff.blockAcceleratorMuonDetector) && multiblocks[4][10][2].equals(DLStuff.blockAcceleratorMuonDetector) && multiblocks[5][10][2].equals(DLStuff.blockAcceleratorMuonDetector) && multiblocks[6][10][2].equals(DLStuff.blockAcceleratorMuonDetector) && multiblocks[7][10][2].equals(DLStuff.blockAcceleratorMuonDetector) && multiblocks[2][1][2].equals(DLStuff.blockAcceleratorMuonDetector) && multiblocks[1][2][2].equals(DLStuff.blockAcceleratorMuonDetector)
 											&& multiblocks[8][1][2].equals(DLStuff.blockAcceleratorMuonDetector) && multiblocks[9][2][2].equals(DLStuff.blockAcceleratorMuonDetector) && multiblocks[1][8][2].equals(DLStuff.blockAcceleratorMuonDetector) && multiblocks[2][9][2].equals(DLStuff.blockAcceleratorMuonDetector) && multiblocks[8][9][2].equals(DLStuff.blockAcceleratorMuonDetector) && multiblocks[9][8][2].equals(DLStuff.blockAcceleratorMuonDetector))
 									{
-										((TileEntityAcceleratorTube) worldObj.getTileEntity(xCoord, yCoord, zCoord + 1)).addDetector(((TileEntityAcceleratorTube) worldObj.getTileEntity(xCoord, yCoord, zCoord - 1)));
+										//((TileEntityAcceleratorTube) worldObj.getTileEntity(xCoord, yCoord, zCoord + 1)).addDetector(((TileEntityAcceleratorTube) worldObj.getTileEntity(xCoord, yCoord, zCoord - 1)));
 										isMultiblockComplete = true;
 									} else
 									{
@@ -478,7 +478,57 @@ public class TileEntityAcceleratorDetectorCore extends TileEntity
 	public boolean isGoodForLaunch()
 	{
 		if(worldObj.getTileEntity(xCoord, yCoord, zCoord + 1) != null)
-			return ((TileEntityAcceleratorTube) worldObj.getTileEntity(xCoord, yCoord, zCoord + 1)).isAcceleratorComplete() && isPowered;
+			return isAcceleratorComplete() && isPowered;
+		return false;
+	}
+	
+	public boolean isAcceleratorComplete()
+	{
+		if(worldObj.getTileEntity(xCoord, yCoord, zCoord + 1) != null && worldObj.getTileEntity(xCoord, yCoord, zCoord - 1) != null
+		&& worldObj.getTileEntity(xCoord, yCoord, zCoord + 2) != null && worldObj.getTileEntity(xCoord, yCoord, zCoord - 2) != null
+		&& worldObj.getTileEntity(xCoord + 1, yCoord, zCoord + 2) != null && worldObj.getTileEntity(xCoord + 1, yCoord, zCoord + 2) != null
+		&& worldObj.getTileEntity(xCoord + 2, yCoord, zCoord + 2) != null && worldObj.getTileEntity(xCoord + 2, yCoord, zCoord + 2) != null
+		&& worldObj.getTileEntity(xCoord + 3, yCoord, zCoord + 2) != null && worldObj.getTileEntity(xCoord + 3, yCoord, zCoord + 2) != null
+		&& worldObj.getTileEntity(xCoord + 4, yCoord, zCoord + 2) != null && worldObj.getTileEntity(xCoord + 4, yCoord, zCoord + 2) != null
+		&& worldObj.getTileEntity(xCoord + 5, yCoord, zCoord + 2) != null && worldObj.getTileEntity(xCoord + 5, yCoord, zCoord + 2) != null
+		&& worldObj.getTileEntity(xCoord + 6, yCoord, zCoord + 2) != null && worldObj.getTileEntity(xCoord + 6, yCoord, zCoord + 2) != null
+		&& worldObj.getTileEntity(xCoord + 7, yCoord, zCoord + 2) != null && worldObj.getTileEntity(xCoord + 7, yCoord, zCoord + 2) != null
+		&& worldObj.getTileEntity(xCoord + 8, yCoord, zCoord + 2) != null && worldObj.getTileEntity(xCoord + 8, yCoord, zCoord + 2) != null
+		&& worldObj.getTileEntity(xCoord + 9, yCoord, zCoord + 2) != null && worldObj.getTileEntity(xCoord + 9, yCoord, zCoord + 2) != null
+		&& worldObj.getTileEntity(xCoord + 10, yCoord, zCoord + 2) != null && worldObj.getTileEntity(xCoord + 10, yCoord, zCoord + 2) != null
+		&& worldObj.getTileEntity(xCoord + 11, yCoord, zCoord + 2) != null && worldObj.getTileEntity(xCoord + 11, yCoord, zCoord + 2) != null
+		&& worldObj.getTileEntity(xCoord + 12, yCoord, zCoord + 2) != null && worldObj.getTileEntity(xCoord + 12, yCoord, zCoord + 2) != null
+		&& worldObj.getTileEntity(xCoord + 13, yCoord, zCoord + 2) != null && worldObj.getTileEntity(xCoord + 13, yCoord, zCoord + 2) != null
+		&& worldObj.getTileEntity(xCoord + 14, yCoord, zCoord + 2) != null && worldObj.getTileEntity(xCoord + 14, yCoord, zCoord + 2) != null
+		&& worldObj.getTileEntity(xCoord + 15, yCoord, zCoord + 2) != null && worldObj.getTileEntity(xCoord + 15, yCoord, zCoord + 2) != null
+		&& worldObj.getTileEntity(xCoord + 16, yCoord, zCoord + 2) != null && worldObj.getTileEntity(xCoord + 16, yCoord, zCoord + 2) != null
+		&& worldObj.getTileEntity(xCoord + 16, yCoord, zCoord + 1) != null && worldObj.getTileEntity(xCoord + 16, yCoord, zCoord + 1) != null
+		&& worldObj.getTileEntity(xCoord + 16, yCoord, zCoord) != null)
+		{
+			if(worldObj.getTileEntity(xCoord, yCoord, zCoord + 1) instanceof TileEntityAcceleratorTube && worldObj.getTileEntity(xCoord, yCoord, zCoord - 1) instanceof TileEntityAcceleratorTube
+					&& worldObj.getTileEntity(xCoord, yCoord, zCoord + 2) instanceof TileEntityAcceleratorTube && worldObj.getTileEntity(xCoord, yCoord, zCoord - 2) instanceof TileEntityAcceleratorTube
+					&& worldObj.getTileEntity(xCoord + 1, yCoord, zCoord + 2) instanceof TileEntityAcceleratorTube && worldObj.getTileEntity(xCoord + 1, yCoord, zCoord + 2) instanceof TileEntityAcceleratorTube
+					&& worldObj.getTileEntity(xCoord + 2, yCoord, zCoord + 2) instanceof TileEntityAcceleratorTube && worldObj.getTileEntity(xCoord + 2, yCoord, zCoord + 2) instanceof TileEntityAcceleratorTube
+					&& worldObj.getTileEntity(xCoord + 3, yCoord, zCoord + 2) instanceof TileEntityAcceleratorTube && worldObj.getTileEntity(xCoord + 3, yCoord, zCoord + 2) instanceof TileEntityAcceleratorTube
+					&& worldObj.getTileEntity(xCoord + 4, yCoord, zCoord + 2) instanceof TileEntityAcceleratorTube && worldObj.getTileEntity(xCoord + 4, yCoord, zCoord + 2) instanceof TileEntityAcceleratorTube
+					&& worldObj.getTileEntity(xCoord + 5, yCoord, zCoord + 2) instanceof TileEntityAcceleratorTube && worldObj.getTileEntity(xCoord + 5, yCoord, zCoord + 2) instanceof TileEntityAcceleratorTube
+					&& worldObj.getTileEntity(xCoord + 6, yCoord, zCoord + 2) instanceof TileEntityAcceleratorTube && worldObj.getTileEntity(xCoord + 6, yCoord, zCoord + 2) instanceof TileEntityAcceleratorTube
+					&& worldObj.getTileEntity(xCoord + 7, yCoord, zCoord + 2) instanceof TileEntityAcceleratorTube && worldObj.getTileEntity(xCoord + 7, yCoord, zCoord + 2) instanceof TileEntityAcceleratorTube
+					&& worldObj.getTileEntity(xCoord + 8, yCoord, zCoord + 2) instanceof TileEntityAcceleratorTube && worldObj.getTileEntity(xCoord + 8, yCoord, zCoord + 2) instanceof TileEntityAcceleratorTube
+					&& worldObj.getTileEntity(xCoord + 9, yCoord, zCoord + 2) instanceof TileEntityAcceleratorTube && worldObj.getTileEntity(xCoord + 9, yCoord, zCoord + 2) instanceof TileEntityAcceleratorTube
+					&& worldObj.getTileEntity(xCoord + 10, yCoord, zCoord + 2) instanceof TileEntityAcceleratorTube && worldObj.getTileEntity(xCoord + 10, yCoord, zCoord + 2) instanceof TileEntityAcceleratorTube
+					&& worldObj.getTileEntity(xCoord + 11, yCoord, zCoord + 2) instanceof TileEntityAcceleratorTube && worldObj.getTileEntity(xCoord + 11, yCoord, zCoord + 2) instanceof TileEntityAcceleratorTube
+					&& worldObj.getTileEntity(xCoord + 12, yCoord, zCoord + 2) instanceof TileEntityAcceleratorTube && worldObj.getTileEntity(xCoord + 12, yCoord, zCoord + 2) instanceof TileEntityAcceleratorTube
+					&& worldObj.getTileEntity(xCoord + 13, yCoord, zCoord + 2) instanceof TileEntityAcceleratorTube && worldObj.getTileEntity(xCoord + 13, yCoord, zCoord + 2) instanceof TileEntityAcceleratorTube
+					&& worldObj.getTileEntity(xCoord + 14, yCoord, zCoord + 2) instanceof TileEntityAcceleratorTube && worldObj.getTileEntity(xCoord + 14, yCoord, zCoord + 2) instanceof TileEntityAcceleratorTube
+					&& worldObj.getTileEntity(xCoord + 15, yCoord, zCoord + 2) instanceof TileEntityAcceleratorTube && worldObj.getTileEntity(xCoord + 15, yCoord, zCoord + 2) instanceof TileEntityAcceleratorTube
+					&& worldObj.getTileEntity(xCoord + 16, yCoord, zCoord + 2) instanceof TileEntityAcceleratorTube && worldObj.getTileEntity(xCoord + 16, yCoord, zCoord + 2) instanceof TileEntityAcceleratorTube
+					&& worldObj.getTileEntity(xCoord + 16, yCoord, zCoord + 1) instanceof TileEntityAcceleratorTube && worldObj.getTileEntity(xCoord + 16, yCoord, zCoord + 1) instanceof TileEntityAcceleratorTube
+					&& worldObj.getTileEntity(xCoord + 16, yCoord, zCoord) instanceof TileEntityAcceleratorTube)
+			{
+				return true;
+			}
+		}
 		return false;
 	}
 

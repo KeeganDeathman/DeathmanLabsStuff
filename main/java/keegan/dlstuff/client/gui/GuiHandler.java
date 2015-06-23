@@ -49,7 +49,7 @@ public class GuiHandler implements IGuiHandler
 		}
 		if (te instanceof TileEntityAcceleratorControlPanel)
 		{
-			return new GuiACP();
+			return new GuiACP((TileEntityAcceleratorControlPanel)te);
 		}
 		if (te instanceof TileEntityAcceleratorInterface)
 		{

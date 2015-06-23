@@ -1,5 +1,7 @@
 package keegan.dlstuff.blocks;
 
+import java.util.Random;
+
 import keegan.dlstuff.DLStuff;
 import keegan.dlstuff.tileentity.*;
 import keegan.labstuff.LabStuffMain;
@@ -75,6 +77,13 @@ public class BlockAcceleratorControlPanel extends Block implements ITileEntityPr
     {
     	return false;
     }
+    
+    @Override
+	public void updateTick(World world, int x, int y, int z, Random rand)
+	{
+		((TileEntityAcceleratorControlPanel)world.getTileEntity(x, y, z)).collision();
+	}
+
 	
 	
 
