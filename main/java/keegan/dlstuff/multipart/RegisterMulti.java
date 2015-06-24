@@ -22,7 +22,7 @@ public class RegisterMulti implements IPartFactory, IPartConverter
 	@Override
     public TMultiPart createPart(String name, boolean client)
     {
-        if(name.equals("multiDSCRibbon")) return new TorchPart();
+        if(name.equals("multiDSCRibbon")) return new RibbonPart();
         
         return null;
     }

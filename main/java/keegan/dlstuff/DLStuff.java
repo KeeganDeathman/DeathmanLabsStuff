@@ -2,11 +2,13 @@ package keegan.dlstuff;
 
 import java.io.File;
 
+import codechicken.lib.packet.PacketCustom;
+import codechicken.multipart.minecraft.McMultipartCPH;
 import keegan.dlstuff.blocks.*;
 import keegan.dlstuff.client.gui.GuiHandler;
 import keegan.dlstuff.common.*;
 import keegan.dlstuff.items.*;
-import keegan.dlstuff.multipart.RegisterMulti;
+import keegan.dlstuff.multipart.*;
 import keegan.dlstuff.network.*;
 import keegan.dlstuff.recipes.*;
 import keegan.dlstuff.tileentity.*;
@@ -16,6 +18,7 @@ import keegan.labstuff.common.TabLabStuff;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.*;
+import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -105,6 +108,8 @@ public class DLStuff
 	@EventHandler
 	public static void preInit(FMLPreInitializationEvent event)
 	{
+	
+		
 		//Items
 		itemDPad = new ItemDPad().setUnlocalizedName("itemDPad").setTextureName("dlstuff:itemDPad").setCreativeTab(tabDeathman);
 		GameRegistry.registerItem(itemDPad, "dPad");
@@ -153,8 +158,10 @@ public class DLStuff
 		GameRegistry.registerBlock(blockAcceleratorHadronCalorimeter, "blockAcceleratorHadronCalorimeter");
 		GameRegistry.registerBlock(blockAcceleratorMuonDetector, "blockAcceleratorMuonDetector");
 		GameRegistry.registerBlock(blockAcceleratorPowerInput, "blockAcceleratorPowerInput");
-		blockDSCRibbonCable = new BlockDSCRibbonCable(Material.iron).setBlockName("blockDSCRibbonCable").setBlockTextureName("dlstuff:blockDSCRibbonCable").setCreativeTab(tabDeathman);
+		blockDSCRibbonCable = new BlockDSCRibbonCable(Material.iron).setBlockName("blockDSCRibbonCable").setBlockTextureName("dlstuff:DSCRibbonCable").setCreativeTab(tabDeathman);
+		blockDSCCore = new BlockDSCCore(Material.iron).setBlockName("blockDSCCore").setBlockTextureName("dlstuff:DSCCore").setCreativeTab(tabDeathman);
 		GameRegistry.registerBlock(blockDSCRibbonCable, "blockDSCRibbonCable");
+		GameRegistry.registerBlock(blockDSCCore, "blockDSCCore");
 
 		blockGravityManipulater = new BlockGravityManipulater(Material.iron).setCreativeTab(tabDeathman).setBlockName("blockGravityManipulater").setBlockTextureName("dlstuff:blockGravity");
 		GameRegistry.registerBlock(blockGravityManipulater, "blockGravityManipulater");
@@ -163,6 +170,8 @@ public class DLStuff
 		{
 			new RegisterMulti();
 		}
+		MinecraftForge.EVENT_BUS.register(new DLEventHandler());
+		PacketCustom.assignHandler(PacketHandler.channel, new PacketHandler());
 	}
 	
 	@EventHandler
@@ -187,6 +196,9 @@ public class DLStuff
 		GameRegistry.registerTileEntity(TileEntityAcceleratorTube.class, "TileEntityAcceleratorTube");
 		GameRegistry.registerTileEntity(TileEntityAcceleratorDetectorCore.class, "TileEntityAcceleratorDetectorCore");
 		GameRegistry.registerTileEntity(TileEntityAcceleratorPowerInput.class, "TileEntityPowerInput");
+		GameRegistry.registerTileEntity(TileEntityRibbonCable.class, "TileEntityRibbonCable");
+		GameRegistry.registerTileEntity(TileEntityDSCCore.class, "TileEntityDSCCore");
+		GameRegistry.registerTileEntity(DSCPart.class, "DSCPart");
 		//Packets
 		packetPipeline.registerPacket(PacketDLLaptopUSB.class);
 		packetPipeline.registerPacket(PacketDLLaptopWeb.class);
