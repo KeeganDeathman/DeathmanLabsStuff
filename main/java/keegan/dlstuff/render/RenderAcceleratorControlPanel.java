@@ -1,6 +1,9 @@
 package keegan.dlstuff.render;
 
 
+import org.lwjgl.opengl.GL11;
+
+import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import keegan.dlstuff.tileentity.TileEntityAcceleratorControlPanel;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -10,10 +13,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.client.model.*;
-
-import org.lwjgl.opengl.GL11;
-
-import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
 public class RenderAcceleratorControlPanel extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler
 {

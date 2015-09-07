@@ -16,11 +16,13 @@ public class TileEntityAcceleratorInterface extends DataConnectedDevice implemen
 	private ItemStack[] chestContents = new ItemStack[3];
 	private TileEntityAcceleratorControlPanel control;
 	private int tickCount;
+	public boolean upgraded;
 	
 	public TileEntityAcceleratorInterface()
 	{
 		tickCount = 0;
 		control = null;
+		upgraded = false;
 	}
 	
 	@Override
@@ -34,6 +36,12 @@ public class TileEntityAcceleratorInterface extends DataConnectedDevice implemen
 	public ItemStack getStackInSlot(int slot)
 	{
 		return chestContents[slot];
+	}
+	
+	public void activateAntiMatter()
+	{
+		upgraded = true;
+		
 	}
 	
 	@Override
@@ -116,7 +124,12 @@ public class TileEntityAcceleratorInterface extends DataConnectedDevice implemen
 			//if(getStackInSlot(1).isItemEqual(new ItemStack(DLStuff.itemDiscoveryDrive)))
 			//{
 			System.out.println("Cheese~~~~~!");
-				setInventorySlotContents(1, DLRecipes.accelDiscoveries.get(discovery).getDiscoveryFlashDrive());
+			setInventorySlotContents(1, DLRecipes.accelDiscoveries.get(discovery).getDiscoveryFlashDrive());
+			if(upgraded)
+			{
+				if(getStackInSlot(2).getItem().equals(DLStuff.itemEmptyWarpDriveBattery))
+					setInventorySlotContents(2, new ItemStack(DLStuff.itemWarpDriveBattery));
+			}
 			//}
 		}
 		if(command.startsWith("launch"))
@@ -238,6 +251,8 @@ public class TileEntityAcceleratorInterface extends DataConnectedDevice implemen
 			int[] networkLoc = {netX,netY,netZ};
 
 			tag.setIntArray("network", networkLoc);
+			
+			tag.setBoolean("upgraded", upgraded);
 		}
 	}
 	
@@ -246,6 +261,7 @@ public class TileEntityAcceleratorInterface extends DataConnectedDevice implemen
 	{
 		int[] net = tag.getIntArray("network");
 		this.register(net[0], net[1], net[2]);
+		upgraded = tag.getBoolean("upgraded");
 	}
 }
 

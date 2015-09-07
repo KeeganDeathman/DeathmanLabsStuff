@@ -1,13 +1,13 @@
 package keegan.dlstuff.client.gui;
 
+import org.lwjgl.opengl.GL11;
+
 import keegan.dlstuff.DLStuff;
 import keegan.dlstuff.container.ContainerACP;
 import keegan.dlstuff.network.PacketACP;
 import keegan.dlstuff.tileentity.TileEntityAcceleratorControlPanel;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ResourceLocation;
-
-import org.lwjgl.opengl.GL11;
 
 public class GuiACP extends GuiContainer
 {

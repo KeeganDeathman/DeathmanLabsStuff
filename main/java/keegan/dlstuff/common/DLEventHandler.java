@@ -1,7 +1,11 @@
 package keegan.dlstuff.common;
 
-import keegan.dlstuff.DLStuff;
-import keegan.dlstuff.multipart.RibbonPart;
+import codechicken.lib.packet.PacketCustom;
+import codechicken.lib.raytracer.RayTracer;
+import codechicken.lib.vec.*;
+import codechicken.multipart.TileMultipart;
+import codechicken.multipart.minecraft.McBlockPart;
+import cpw.mods.fml.common.eventhandler.*;
 import keegan.dlstuff.network.PacketHandler;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,12 +17,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
-import codechicken.lib.packet.PacketCustom;
-import codechicken.lib.raytracer.RayTracer;
-import codechicken.lib.vec.*;
-import codechicken.multipart.TileMultipart;
-import codechicken.multipart.minecraft.*;
-import cpw.mods.fml.common.eventhandler.*;
 
 public class DLEventHandler
 {
@@ -50,7 +48,7 @@ public class DLEventHandler
 		Block heldBlock = Block.getBlockFromItem(held.getItem());
 		if (heldBlock == Blocks.air) return false;
 
-		if (heldBlock == DLStuff.blockDSCRibbonCable) part = RibbonPart.placement(world, pos, hit.sideHit);
+		//if (heldBlock == DLStuff.blockDSCRibbonCable) part = RibbonPart.placement(world, pos, hit.sideHit);
 
 		if (part == null) return false;
 

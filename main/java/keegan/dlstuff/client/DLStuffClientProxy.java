@@ -1,12 +1,13 @@
 package keegan.dlstuff.client;
 
+import cpw.mods.fml.client.registry.ClientRegistry;
 import keegan.dlstuff.DLStuff;
 import keegan.dlstuff.common.DLStuffCommonProxy;
+import keegan.dlstuff.multipart.TileEntityRibbonCable;
 import keegan.dlstuff.render.*;
 import keegan.dlstuff.tileentity.*;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.MinecraftForgeClient;
-import cpw.mods.fml.client.registry.ClientRegistry;
 
 public class DLStuffClientProxy extends DLStuffCommonProxy
 {
@@ -21,6 +22,8 @@ public class DLStuffClientProxy extends DLStuffCommonProxy
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAcceleratorTube.class, new RenderAcceleratorTube());
 		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(DLStuff.blockAcceleratorTube), new ItemRenderAcceleratorPipe());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAcceleratorDetectorCore.class, new RenderAcceleratorDetector());
+		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(DLStuff.blockDSCRibbonCable), new ItemRendererRibbonCable());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRibbonCable.class, new RenderRibbonCable());
 	}
 	
 	@Override

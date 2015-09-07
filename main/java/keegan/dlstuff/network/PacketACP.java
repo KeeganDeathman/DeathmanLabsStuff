@@ -3,7 +3,7 @@ package keegan.dlstuff.network;
 import cpw.mods.fml.common.network.ByteBufUtils;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
-import keegan.dlstuff.tileentity.*;
+import keegan.dlstuff.tileentity.TileEntityAcceleratorControlPanel;
 import keegan.labstuff.PacketHandling.AbstractPacket;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;

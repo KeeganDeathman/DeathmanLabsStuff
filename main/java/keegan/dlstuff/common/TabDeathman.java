@@ -1,10 +1,8 @@
 package keegan.dlstuff.common;
 
-import keegan.labstuff.LabStuffMain;
-import keegan.labstuff.common.TabLabStuff;
-
-import net.minecraft.item.Item;
 import keegan.dlstuff.DLStuff;
+import keegan.labstuff.common.TabLabStuff;
+import net.minecraft.item.Item;
 
 public class TabDeathman extends TabLabStuff 
 {

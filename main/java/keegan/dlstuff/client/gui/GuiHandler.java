@@ -1,5 +1,6 @@
 package keegan.dlstuff.client.gui;
 
+import cpw.mods.fml.common.network.IGuiHandler;
 import keegan.dlstuff.client.gui.laptop.GuiDLLaptop;
 import keegan.dlstuff.container.*;
 import keegan.dlstuff.container.laptop.ContainerDLLaptop;
@@ -7,7 +8,6 @@ import keegan.dlstuff.tileentity.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.network.IGuiHandler;
 
 public class GuiHandler implements IGuiHandler
 {
@@ -32,6 +32,14 @@ public class GuiHandler implements IGuiHandler
 		{
 			return new ContainerAcceleratorInterface(player.inventory, (TileEntityAcceleratorInterface) te);
 		}
+		if(te instanceof DSCDrive)
+		{
+			return new ContainerDSCDrive(player.inventory, (DSCDrive) te);
+		}
+		if(te instanceof DSCBench)
+		{
+			return new ContainerDSCBench(player.inventory, (DSCBench) te);
+		}
 		return null;
 	}
 
@@ -54,6 +62,14 @@ public class GuiHandler implements IGuiHandler
 		if (te instanceof TileEntityAcceleratorInterface)
 		{
 			return new GuiAcceleratorInterface(player.inventory, (TileEntityAcceleratorInterface) te);
+		}
+		if(te instanceof DSCDrive)
+		{
+			return new GuiDSCDrive(player.inventory, (DSCDrive) te);
+		}
+		if(te instanceof DSCBench)
+		{
+			return new GuiDSCBench(player.inventory, (DSCBench) te);
 		}
 		return null;
 	}

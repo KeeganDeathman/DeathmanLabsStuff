@@ -1,5 +1,8 @@
 package keegan.dlstuff.client.gui;
 
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.GL11;
+
 import keegan.dlstuff.DLStuff;
 import keegan.dlstuff.container.ContainerGravity;
 import keegan.dlstuff.network.PacketGravity;
@@ -8,9 +11,6 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.*;
 import net.minecraft.util.ResourceLocation;
-
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.GL11;
 
 public class GuiGravityManipulater extends GuiContainer
 {

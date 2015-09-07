@@ -1,10 +1,9 @@
 package keegan.dlstuff.network;
 
-import keegan.dlstuff.common.DLEventHandler;
+import codechicken.lib.packet.PacketCustom;
+import codechicken.lib.packet.PacketCustom.IClientPacketHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.play.INetHandlerPlayClient;
-import codechicken.lib.packet.*;
-import codechicken.lib.packet.PacketCustom.IClientPacketHandler;
 
 public class ClientPacketHandler implements IClientPacketHandler
 {

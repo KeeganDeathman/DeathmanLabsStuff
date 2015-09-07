@@ -2,14 +2,12 @@ package keegan.dlstuff.multipart;
 
 import java.util.Arrays;
 
-import keegan.dlstuff.DLStuff;
-import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.world.World;
 import codechicken.lib.vec.BlockCoord;
 import codechicken.multipart.*;
 import codechicken.multipart.MultiPartRegistry.*;
-import codechicken.multipart.minecraft.*;
+import keegan.dlstuff.DLStuff;
+import net.minecraft.block.Block;
+import net.minecraft.world.World;
 
 public class RegisterMulti implements IPartFactory, IPartConverter
 {
@@ -22,7 +20,7 @@ public class RegisterMulti implements IPartFactory, IPartConverter
 	@Override
     public TMultiPart createPart(String name, boolean client)
     {
-        if(name.equals("multiDSCRibbon")) return new RibbonPart();
+       // if(name.equals("multiDSCRibbon")) return new RibbonPart();
         
         return null;
     }
@@ -45,8 +43,8 @@ public class RegisterMulti implements IPartFactory, IPartConverter
     {
         Block b = world.getBlock(pos.x, pos.y, pos.z);
         int meta = world.getBlockMetadata(pos.x, pos.y, pos.z);
-        if(b == DLStuff.blockDSCRibbonCable)
-            return new RibbonPart(meta);
+       // if(b == DLStuff.blockDSCRibbonCable)
+         //   return new RibbonPart(meta);
         
         return null;
     }

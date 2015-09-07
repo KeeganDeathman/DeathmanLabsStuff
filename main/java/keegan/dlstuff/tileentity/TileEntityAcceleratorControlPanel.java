@@ -2,7 +2,6 @@ package keegan.dlstuff.tileentity;
 
 import java.util.*;
 
-import keegan.dlstuff.DLStuff;
 import keegan.dlstuff.recipes.*;
 import keegan.labstuff.tileentity.*;
 import net.minecraft.nbt.NBTTagCompound;

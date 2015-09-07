@@ -1,5 +1,6 @@
 package keegan.dlstuff.network;
 
+import cpw.mods.fml.common.network.ByteBufUtils;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import keegan.dlstuff.tileentity.TileEntityDLLaptop;
@@ -7,7 +8,6 @@ import keegan.labstuff.PacketHandling.AbstractPacket;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.network.ByteBufUtils;
 
 public class PacketDLLaptopWeb extends AbstractPacket {
 

@@ -1,6 +1,6 @@
 package keegan.dlstuff.container;
 
-import keegan.dlstuff.tileentity.*;
+import keegan.dlstuff.tileentity.TileEntityAcceleratorInterface;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 
@@ -19,6 +19,9 @@ public class ContainerAcceleratorInterface extends Container
 		
 		this.addSlotToContainer(new Slot(tile, 0, 114, 172));
 		this.addSlotToContainer(new Slot(tile, 1, 211, 116));
+		
+		if(tile.upgraded)
+			this.addSlotToContainer(new Slot(tile, 2, 240, 240));
 		
 	}
 	

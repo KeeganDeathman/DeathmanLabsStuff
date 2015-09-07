@@ -1,12 +1,12 @@
 package keegan.dlstuff.render;
 
+import org.lwjgl.opengl.GL11;
+
 import keegan.labstuff.models.ModelPlasmaPipe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
-
-import org.lwjgl.opengl.GL11;
 
 public class ItemRenderAcceleratorPipe implements IItemRenderer {
 

@@ -1,18 +1,15 @@
 package keegan.dlstuff.client.gui.laptop;
 
+import org.lwjgl.opengl.GL11;
+
 import keegan.dlstuff.DLStuff;
 import keegan.dlstuff.container.laptop.ContainerDLLaptop;
-import keegan.dlstuff.network.PacketDLLaptopUSB;
-import keegan.dlstuff.network.PacketDLLaptopWeb;
+import keegan.dlstuff.network.*;
 import keegan.dlstuff.tileentity.TileEntityDLLaptop;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.*;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
-
-import org.lwjgl.opengl.GL11;
 
 public class GuiDLLaptop extends GuiContainer
 {

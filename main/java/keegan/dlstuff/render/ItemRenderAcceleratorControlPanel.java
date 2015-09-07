@@ -1,14 +1,12 @@
 package keegan.dlstuff.render;
 
-import keegan.dlstuff.models.ModelAcceleratorControlPanel;
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.model.*;
-
-import org.lwjgl.opengl.GL11;
 
 public class ItemRenderAcceleratorControlPanel implements IItemRenderer {
 

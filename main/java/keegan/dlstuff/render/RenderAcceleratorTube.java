@@ -1,5 +1,8 @@
 package keegan.dlstuff.render;
 
+import org.lwjgl.opengl.GL11;
+
+import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import keegan.dlstuff.tileentity.*;
 import keegan.labstuff.models.ModelPlasmaPipe;
 import net.minecraft.block.Block;
@@ -9,10 +12,6 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.*;
-
-import org.lwjgl.opengl.GL11;
-
-import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
 public class RenderAcceleratorTube extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler{
 

@@ -1,7 +1,6 @@
 package keegan.dlstuff.tileentity;
 
 import keegan.dlstuff.multipart.TileEntityRibbonCable;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 
 public class DSCPart extends TileEntity
@@ -70,7 +69,7 @@ public class DSCPart extends TileEntity
 		return id;
 	}
 	
-	public void performAction(String command) {}
+	public void performAction(String command, DSCPart sender) {}
 	
 	public TileEntityRibbonCable getNetwork()
 	{

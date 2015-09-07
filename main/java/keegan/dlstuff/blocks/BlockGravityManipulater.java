@@ -1,9 +1,8 @@
 package keegan.dlstuff.blocks;
 
 import keegan.dlstuff.DLStuff;
-import keegan.dlstuff.tileentity.*;
-import net.minecraft.block.Block;
-import net.minecraft.block.ITileEntityProvider;
+import keegan.dlstuff.tileentity.TileEntityGravityManipulater;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;

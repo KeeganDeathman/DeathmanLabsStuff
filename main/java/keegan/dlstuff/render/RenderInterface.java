@@ -1,6 +1,9 @@
 package keegan.dlstuff.render;
 
 
+import org.lwjgl.opengl.GL11;
+
+import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import keegan.dlstuff.models.ModelInterface;
 import keegan.dlstuff.tileentity.TileEntityInterface;
 import net.minecraft.block.Block;
@@ -10,10 +13,6 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
-
-import org.lwjgl.opengl.GL11;
-
-import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
 public class RenderInterface extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler{
 	//This method is called when minecraft renders a tile entity

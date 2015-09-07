@@ -2,16 +2,15 @@ package keegan.dlstuff.multipart;
 
 import java.util.ArrayList;
 
-import keegan.dlstuff.tileentity.DSCPart;
-import keegan.labstuff.tileentity.DataPackage;
+import keegan.dlstuff.tileentity.*;
 import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityRibbonCable extends TileEntity
 {
 
 	protected ArrayList<DSCPart> devices;
-	private boolean networked;
-	private int tickCount;
+	protected boolean networked;
+	protected int tickCount;
 
 	public TileEntityRibbonCable()
 	{
@@ -239,11 +238,11 @@ public class TileEntityRibbonCable extends TileEntity
 		}
 	}
 
-	public void sendMessage(DataPackage msg)
+	public void sendMessage(DSCPackage msg)
 	{
 		if (getDeviceById(msg.getTarget().getId()) != null)
 		{
-			msg.getTarget().performAction(msg.getMessage());
+			msg.getTarget().performAction(msg.getMessage(), msg.getSender());
 		}
 	}
 

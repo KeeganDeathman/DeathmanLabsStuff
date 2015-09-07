@@ -1,21 +1,15 @@
 package keegan.dlstuff.blocks;
 
-import org.lwjgl.input.Keyboard;
-
 import keegan.dlstuff.DLStuff;
 import keegan.dlstuff.tileentity.TileEntityDLLaptop;
-import net.minecraft.block.Block;
-import net.minecraft.block.ITileEntityProvider;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.MouseHelper;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
+import net.minecraft.world.*;
 
 public class BlockDLLaptop extends Block implements ITileEntityProvider
 {

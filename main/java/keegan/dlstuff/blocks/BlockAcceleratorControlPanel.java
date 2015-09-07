@@ -3,16 +3,13 @@ package keegan.dlstuff.blocks;
 import java.util.Random;
 
 import keegan.dlstuff.DLStuff;
-import keegan.dlstuff.tileentity.*;
-import keegan.labstuff.LabStuffMain;
-import net.minecraft.block.Block;
-import net.minecraft.block.ITileEntityProvider;
+import keegan.dlstuff.tileentity.TileEntityAcceleratorControlPanel;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.*;
 
 public class BlockAcceleratorControlPanel extends Block implements ITileEntityProvider
